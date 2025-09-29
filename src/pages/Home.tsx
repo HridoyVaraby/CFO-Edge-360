@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CompanyOverview from '../components/CompanyOverview';
 import {
   TrendingUp,
   DollarSign,
@@ -98,7 +99,8 @@ const Home = () => {
           <div className="mx-auto w-32 h-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full"></div>
         </div>
       </section>
-
+      {/* Company Overview */}
+      <CompanyOverview />
       {/* About CFO EDGE360 */}
       <section className="px-4 py-16 sm:px-6 lg:px-8 bg-white">
         <div className="mx-auto max-w-4xl text-center">
