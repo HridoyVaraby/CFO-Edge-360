@@ -22,9 +22,9 @@ const CTASection = ({
   className = ""
 }: CTASectionProps) => {
   return (
-    <section className={`px-4 py-20 sm:px-6 lg:px-8 ${className}`}>
+    <section className={`px-4 py-20 sm:px-6 lg:px-8 bg-white ${className}`}>
       <div className="mx-auto max-w-4xl text-center">
-        <div className="rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 p-12 border border-blue-100">
+        <div className="rounded-2xl bg-gradient-to-r from-amber-50 to-amber-100 p-12 border border-amber-200">
           <h2 className="mb-6 text-3xl font-bold text-gray-900 sm:text-4xl font-serif">
             {title}
           </h2>
@@ -35,16 +35,16 @@ const CTASection = ({
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               to={primaryButtonLink}
-              className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-white font-semibold rounded-lg hover:from-amber-500 hover:to-amber-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               {primaryButtonText}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
-              to={secondaryButtonLink}
-              className="inline-flex items-center px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-200"
+              to="/contact"
+              className="inline-flex items-center px-8 py-4 border-2 border-amber-400 text-amber-600 font-semibold rounded-lg hover:bg-amber-400 hover:text-white transition-all duration-200"
             >
-              {secondaryButtonText}
+              Contact Us
             </Link>
           </div>
         </div>
