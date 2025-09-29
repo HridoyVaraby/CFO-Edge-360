@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  TrendingUp, 
-  DollarSign, 
-  FileText, 
-  Globe, 
-  BarChart3, 
-  Handshake, 
+import {
+  TrendingUp,
+  DollarSign,
+  FileText,
+  Globe,
+  BarChart3,
+  Handshake,
   Settings,
   Building2,
   ArrowRight
 } from 'lucide-react';
+import CTASection from '../components/CTASection';
 
 const Home = () => {
   const services = [
@@ -233,50 +234,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="px-4 py-20 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-blue-700">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="mb-6 text-3xl font-bold text-white sm:text-4xl font-serif">
-            Ready to Transform Your Financial Future?
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-blue-100 leading-relaxed">
-            Join businesses across four continents who trust CFO EDGE360 for strategic 
-            financial leadership. Let's discuss how we can accelerate your growth.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              to="/contact"
-              className="inline-flex items-center px-8 py-4 bg-white text-blue-700 font-semibold rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              Book Your Free Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link
-              to="/services"
-              className="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-700 transition-all duration-200"
-            >
-              Explore Our Services
-            </Link>
-          </div>
-          
-          <div className="mt-8 flex justify-center items-center space-x-8 text-blue-200">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">24hrs</div>
-              <div className="text-sm">Response Time</div>
-            </div>
-            <div className="w-px h-12 bg-blue-400"></div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">4</div>
-              <div className="text-sm">Continents</div>
-            </div>
-            <div className="w-px h-12 bg-blue-400"></div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white">360°</div>
-              <div className="text-sm">CFO Services</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </div>
   );
 };

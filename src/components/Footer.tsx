@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Linkedin, Twitter, Facebook, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
@@ -54,19 +55,19 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
+                <Link to="/" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/services" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
+                <Link to="/services" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/contact" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
+                <Link to="/contact" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -76,24 +77,24 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Our Policy</h4>
             <ul className="space-y-2">
               <li>
-                <a href="/privacy-policy" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
+                <Link to="/privacy-policy" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/cookie-policy" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
+                <Link to="/cookie-policy" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
                   Cookie Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/cancellation-refund-policy" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
+                <Link to="/cancellation-refund-policy" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
                   Cancellation & Refund Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/terms-conditions" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
+                <Link to="/terms-conditions" className="text-gray-600 hover:text-amber-500 transition-colors duration-200">
                   Terms & Conditions
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
