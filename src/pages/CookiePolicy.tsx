@@ -3,6 +3,19 @@ import React from 'react';
 const CookiePolicy = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+      {/* Hero Section */}
+      <section className="relative px-4 py-16 sm:px-6 lg:px-8 bg-white">
+        <div className="mx-auto max-w-4xl text-center">
+          <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl font-serif">
+            Cookie Policy
+          </h1>
+          <p className="mx-auto mb-8 max-w-3xl text-xl text-gray-600 leading-relaxed">
+            Learn about how we use cookies to enhance your experience and provide better services across our platform.
+          </p>
+          <div className="mx-auto w-32 h-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full"></div>
+        </div>
+      </section>
+
       <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 lg:p-12">
           <h1 className="text-3xl font-bold text-gray-900 font-serif mb-8">
