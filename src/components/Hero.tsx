@@ -16,7 +16,7 @@ const Hero = () => {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+        <div className="grid lg:grid-cols-2 gap-12 lg:items-start min-h-[80vh]">
           
           {/* Left Column - Content */}
           <div className="space-y-8 animate-fade-in">
@@ -79,10 +79,10 @@ const Hero = () => {
           </div>
 
           {/* Right Column - Visual */}
-          <div className="relative lg:pl-8 animate-slide-up">
+          <div className="relative lg:pl-8 animate-slide-up lg:pt-8">
             <div className="relative">
               {/* Main dashboard mockup */}
-              <div className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-2 hover:rotate-0 transition-transform duration-500">
+              <div className="bg-white rounded-2xl shadow-2xl p-6 transform rotate-0 hover:-rotate-2 transition-transform duration-500">
                 <div className="space-y-4">
                   {/* Header */}
                   <div className="flex items-center justify-between pb-4 border-b border-gray-100">
