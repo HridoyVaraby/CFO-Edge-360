@@ -112,7 +112,7 @@ const Contact = () => {
               </div>
 
               {/* Service Areas */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-amber-200">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
                   Our Expertise Areas
                 </h3>
