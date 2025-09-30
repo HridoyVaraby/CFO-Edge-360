@@ -3,10 +3,10 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    company: '',
-    revenueStage: '',
+    whatsapp: '',
     message: ''
   });
 
@@ -30,10 +30,10 @@ const Contact = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       setSubmitStatus('success');
       setFormData({
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
-        company: '',
-        revenueStage: '',
+        whatsapp: '',
         message: ''
       });
     } catch (error) {
@@ -42,16 +42,6 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-
-  const revenueStages = [
-    { value: '', label: 'Select Revenue Stage' },
-    { value: 'pre-revenue', label: 'Pre-Revenue' },
-    { value: '0-1m', label: '$0 - $1M' },
-    { value: '1-5m', label: '$1M - $5M' },
-    { value: '5-10m', label: '$5M - $10M' },
-    { value: '10-50m', label: '$10M - $50M' },
-    { value: '50m+', label: '$50M+' }
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
@@ -148,7 +138,10 @@ const Contact = () => {
 
             {/* Contact Form */}
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-              <div className="text-center mb-6">
+              <div className="text-left mb-6">
+                <h3 className="text-2xl font-bold text-amber-500 mb-2 font-serif">
+                  Send us a message
+                </h3>
                 <p className="text-gray-600">
                   Have a question or need assistance? Fill out the form below, and we’ll get back to you as soon as possible. Your inquiries are important to us!
                 </p>
@@ -156,21 +149,39 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                      Name *
+                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
+                      First Name *
                     </label>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
+                      id="firstName"
+                      name="firstName"
                       required
-                      value={formData.name}
+                      value={formData.firstName}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors duration-200"
-                      placeholder="Your full name"
+                      placeholder="Your first name"
                     />
                   </div>
                   
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
+                      Last Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      required
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors duration-200"
+                      placeholder="Your last name"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email *
@@ -186,42 +197,20 @@ const Contact = () => {
                       placeholder="your@email.com"
                     />
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                      Company *
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      required
-                      value={formData.company}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors duration-200"
-                      placeholder="Your company name"
-                    />
-                  </div>
                   
                   <div>
-                    <label htmlFor="revenueStage" className="block text-sm font-medium text-gray-700 mb-2">
-                      Revenue Stage
+                    <label htmlFor="whatsapp" className="block text-sm font-medium text-gray-700 mb-2">
+                      WhatsApp Number
                     </label>
-                    <select
-                      id="revenueStage"
-                      name="revenueStage"
-                      value={formData.revenueStage}
+                    <input
+                      type="tel"
+                      id="whatsapp"
+                      name="whatsapp"
+                      value={formData.whatsapp}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors duration-200"
-                    >
-                      {revenueStages.map((stage) => (
-                        <option key={stage.value} value={stage.value}>
-                          {stage.label}
-                        </option>
-                      ))}
-                    </select>
+                      placeholder="+1 (555) 123-4567"
+                    />
                   </div>
                 </div>
 
@@ -245,7 +234,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {isSubmitting ? (
                     <>
