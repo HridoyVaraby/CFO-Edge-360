@@ -1,8 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Linkedin, Twitter, Facebook, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="bg-gray-900 text-white px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
@@ -126,7 +126,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-500 text-center md:text-left mb-4 md:mb-0">
-            © 2024 CFO EDGE360. All rights reserved.
+            © {currentYear} CFO EDGE360. All rights reserved.
           </p>
           <img src="/payments.webp" alt="Payment methods" className="h-full w-auto" />
         </div>
