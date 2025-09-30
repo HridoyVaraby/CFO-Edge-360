@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Hero from '../components/Hero';
 import CompanyOverview from '../components/CompanyOverview';
 import {
   TrendingUp,
@@ -9,7 +10,6 @@ import {
   BarChart3,
   Handshake,
   Settings,
-  Building2,
   ArrowRight
 } from 'lucide-react';
 import CTASection from '../components/CTASection';
@@ -61,44 +61,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          {/* Logo placeholder with building icon */}
-          <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-amber-500 shadow-lg">
-            <Building2 className="h-8 w-8 text-white" />
-          </div>
-          
-          <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl font-serif">
-            Your 360° Virtual CFO Advantage
-          </h1>
-          
-          <p className="mx-auto mb-8 max-w-3xl text-xl text-gray-600 leading-relaxed">
-            Smarter Financial Leadership, On-Demand. Global reach, fractional cost, strategic insight.
-          </p>
-          
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Link
-              to="/contact"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              Book a Free Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-            <Link
-              to="/services"
-              className="inline-flex items-center px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 hover:border-amber-400 transition-all duration-200"
-            >
-              Explore Our Services
-            </Link>
-          </div>
-          
-          {/* Decorative element */}
-          <div className="mx-auto w-32 h-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full"></div>
-        </div>
-      </section>
+      <Hero />
       {/* Company Overview */}
       <CompanyOverview />
       {/* Services Snapshot */}
