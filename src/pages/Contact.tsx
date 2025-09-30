@@ -148,6 +148,11 @@ const Contact = () => {
 
             {/* Contact Form */}
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <div className="text-center mb-6">
+                <p className="text-gray-600">
+                  Have a question or need assistance? Fill out the form below, and we’ll get back to you as soon as possible. Your inquiries are important to us!
+                </p>
+              </div>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
