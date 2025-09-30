@@ -1,0 +1,24 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Handle client-side routing for React SPA
+# Redirect all requests to index.html except for actual files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+
+# Set cache headers for static assets
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$">
+    Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
+
+# Prevent access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|env)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Enable compression for text files
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
