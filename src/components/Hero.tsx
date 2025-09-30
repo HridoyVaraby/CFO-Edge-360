@@ -41,7 +41,7 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4">
               <Link
                 to="/contact"
-                className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-slate-900 text-white font-semibold rounded-xl hover:bg-slate-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-h-[44px] text-sm sm:text-base"
+                className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-h-[44px] text-sm sm:text-base"
               >
                 Book a Free Consultation
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-200" />
@@ -49,7 +49,7 @@ const Hero = () => {
               
               <Link
                 to="/services"
-                className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-slate-900 font-semibold rounded-xl border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all duration-300 shadow-sm hover:shadow-md min-h-[44px] text-sm sm:text-base"
+                className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white text-amber-600 font-semibold rounded-xl border-2 border-amber-300 hover:border-amber-400 hover:bg-amber-50 transition-all duration-300 shadow-sm hover:shadow-md min-h-[44px] text-sm sm:text-base"
               >
                 Explore Our Services
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-200" />

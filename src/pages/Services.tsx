@@ -102,76 +102,123 @@ const Services = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="px-4 py-12 sm:py-16 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-7xl">
-          <div className="space-y-12 sm:space-y-16">
+          <div className="space-y-0">
             {services.map((service, index) => {
               const Icon = service.icon;
               const isEven = index % 2 === 0;
+              const bgColor = isEven ? 'bg-white' : 'bg-gradient-to-br from-gray-50 to-white';
               
               return (
                 <div
                   key={service.id}
                   id={service.id}
-                  className={`grid lg:grid-cols-2 gap-8 sm:gap-12 items-center ${
-                    isEven ? '' : 'lg:grid-flow-col-dense'
-                  }`}
+                  className={`${bgColor} border-b border-gray-100 last:border-b-0`}
                 >
-                  {/* Content */}
-                  <div className={`space-y-4 sm:space-y-6 ${isEven ? '' : 'lg:col-start-2'}`}>
-                    <div className="flex items-center space-x-3 sm:space-x-4">
-                      <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-white flex-shrink-0">
-                        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                  <div className="px-4 py-16 sm:py-20 sm:px-6 lg:px-8">
+                    <div className={`grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center max-w-6xl mx-auto ${
+                      isEven ? '' : 'lg:grid-flow-col-dense'
+                    }`}>
+                      {/* Content */}
+                      <div className={`space-y-6 sm:space-y-8 ${isEven ? '' : 'lg:col-start-2'}`}>
+                        <div className="space-y-4">
+                          <div className="flex items-center space-x-4">
+                            <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 text-white shadow-lg flex-shrink-0">
+                              <Icon className="h-7 w-7 sm:h-8 sm:w-8" />
+                            </div>
+                            <div className="flex-1">
+                              <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full mb-2">
+                                Service #{index + 1}
+                              </span>
+                              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-serif leading-tight">
+                                {service.title}
+                              </h2>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-4 sm:space-y-5">
+                          {service.description.map((paragraph, pIndex) => (
+                            <p key={pIndex} className="text-base sm:text-lg text-gray-700 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        
+                        <div className="pt-4">
+                          <Link
+                            to="/contact"
+                            className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-h-[44px] text-sm sm:text-base"
+                          >
+                            Get Started with {service.title.split(' ')[0]} {service.title.split(' ')[1]}
+                            <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                          </Link>
+                        </div>
                       </div>
-                      <h2 className="text-xl sm:text-2xl font-bold text-gray-900 font-serif leading-tight">
-                        {service.title}
-                      </h2>
-                    </div>
-                    
-                    <div className="space-y-3 sm:space-y-4">
-                      {service.description.map((paragraph, pIndex) => (
-                        <p key={pIndex} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                    
-                    <Link
-                      to="/contact"
-                      className="inline-flex items-center px-5 sm:px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 min-h-[44px] text-sm sm:text-base"
-                    >
-                      Let's Talk
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </div>
-                  
-                  {/* Visual Element */}
-                  <div className={`${isEven ? '' : 'lg:col-start-1'} mt-6 lg:mt-0`}>
-                    <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100 relative overflow-hidden">
-                      <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-amber-400/10 to-amber-500/10 rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16"></div>
-                      <div className="relative">
-                        <Icon className="h-12 w-12 sm:h-16 sm:w-16 text-amber-500 mb-3 sm:mb-4" />
-                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
-                          Key Benefits
-                        </h3>
-                        <ul className="space-y-2 text-xs sm:text-sm text-gray-600">
-                          <li className="flex items-center">
-                            <div className="w-2 h-2 bg-amber-400 rounded-full mr-3 flex-shrink-0"></div>
-                            Strategic insight and planning
-                          </li>
-                          <li className="flex items-center">
-                            <div className="w-2 h-2 bg-amber-400 rounded-full mr-3 flex-shrink-0"></div>
-                            Cost-effective expertise
-                          </li>
-                          <li className="flex items-center">
-                            <div className="w-2 h-2 bg-amber-400 rounded-full mr-3 flex-shrink-0"></div>
-                            Scalable solutions
-                          </li>
-                          <li className="flex items-center">
-                            <div className="w-2 h-2 bg-amber-400 rounded-full mr-3 flex-shrink-0"></div>
-                            Global compliance
-                          </li>
-                        </ul>
+                      
+                      {/* Enhanced Visual Element */}
+                      <div className={`${isEven ? '' : 'lg:col-start-1'} mt-8 lg:mt-0`}>
+                        <div className="relative">
+                          {/* Main Card */}
+                          <div className={`${isEven ? 'bg-gradient-to-br from-gray-50 to-gray-100' : 'bg-white'} rounded-3xl p-8 sm:p-10 shadow-xl border border-gray-200 relative overflow-hidden`}>
+                            {/* Background Pattern */}
+                            <div className="absolute inset-0 opacity-5">
+                              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-amber-400 to-amber-500 rounded-full -translate-y-20 translate-x-20"></div>
+                              <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-amber-300 to-amber-400 rounded-full translate-y-16 -translate-x-16"></div>
+                            </div>
+                            
+                            <div className="relative">
+                              {/* Large Icon */}
+                              <div className="mb-6">
+                                <div className="inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 text-white shadow-lg">
+                                  <Icon className="h-10 w-10 sm:h-12 sm:w-12" />
+                                </div>
+                              </div>
+                              
+                              {/* Benefits Section */}
+                              <div className="space-y-4">
+                                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+                                  Key Benefits
+                                </h3>
+                                <div className="grid grid-cols-1 gap-3">
+                                  {[
+                                    'Strategic insight and planning',
+                                    'Cost-effective expertise',
+                                    'Scalable solutions',
+                                    'Global compliance'
+                                  ].map((benefit, bIndex) => (
+                                    <div key={bIndex} className="flex items-center space-x-3">
+                                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-100">
+                                        <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                                      </div>
+                                      <span className="text-sm sm:text-base font-medium text-gray-700">{benefit}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              {/* Stats or Metrics */}
+                              <div className="mt-6 pt-6 border-t border-gray-200">
+                                <div className="grid grid-cols-2 gap-4">
+                                  <div className="text-center">
+                                    <div className="text-2xl font-bold text-amber-600">24/7</div>
+                                    <div className="text-xs text-gray-600">Support</div>
+                                  </div>
+                                  <div className="text-center">
+                                    <div className="text-2xl font-bold text-amber-600">Global</div>
+                                    <div className="text-xs text-gray-600">Reach</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Floating Elements */}
+                          <div className="absolute -top-4 -right-4 bg-amber-500 text-white p-3 rounded-xl shadow-lg">
+                            <div className="text-xs font-semibold">#{index + 1}</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -195,7 +242,7 @@ const Services = () => {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-h-[44px] text-sm sm:text-base"
+              className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-h-[44px] text-sm sm:text-base"
             >
               Schedule a Consultation
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />

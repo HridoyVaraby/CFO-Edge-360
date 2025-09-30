@@ -44,7 +44,7 @@ const Header = () => {
           <div className="hidden md:block">
             <Link
               to="/contact"
-              className="inline-flex items-center px-6 py-3 bg-slate-900 text-white font-semibold rounded-xl hover:bg-slate-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               Book Consultation
             </Link>
@@ -80,7 +80,7 @@ const Header = () => {
               <Link
                 to="/contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="block mt-4 px-3 py-2 bg-slate-900 text-white font-semibold rounded-xl text-center hover:bg-slate-800 transition-colors duration-200"
+                className="block mt-4 px-3 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-xl text-center hover:from-amber-600 hover:to-amber-700 transition-colors duration-200"
               >
                 Book Consultation
               </Link>
