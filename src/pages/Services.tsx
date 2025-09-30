@@ -185,7 +185,7 @@ const Services = () => {
       {/* CTA Section */}
       <section className="px-4 py-16 sm:px-6 lg:px-8 bg-white">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 p-8 border border-blue-100">
+          <div className="rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 p-8 border border-amber-100">
             <h2 className="mb-4 text-2xl font-bold text-gray-900 font-serif">
               Ready to Transform Your Financial Operations?
             </h2>
@@ -195,7 +195,7 @@ const Services = () => {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               Schedule a Consultation
               <ArrowRight className="ml-2 h-5 w-5" />
