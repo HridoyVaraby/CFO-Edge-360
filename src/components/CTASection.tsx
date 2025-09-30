@@ -22,27 +22,27 @@ const CTASection = ({
   className = ""
 }: CTASectionProps) => {
   return (
-    <section className={`px-4 py-20 sm:px-6 lg:px-8 bg-white ${className}`}>
+    <section className={`px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8 bg-white ${className}`}>
       <div className="mx-auto max-w-4xl text-center">
-        <div className="rounded-2xl bg-gradient-to-r from-amber-50 to-amber-100 p-12 border border-amber-200">
-          <h2 className="mb-6 text-3xl font-bold text-gray-900 sm:text-4xl font-serif">
+        <div className="rounded-2xl bg-gradient-to-r from-amber-50 to-amber-100 p-6 sm:p-8 lg:p-12 border border-amber-200">
+          <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 font-serif">
             {title}
           </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-700 leading-relaxed">
+          <p className="mx-auto mb-6 sm:mb-8 max-w-2xl text-base sm:text-lg text-gray-700 leading-relaxed">
             {subtitle}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link
               to={primaryButtonLink}
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-white font-semibold rounded-lg hover:from-amber-500 hover:to-amber-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-white font-semibold rounded-lg hover:from-amber-500 hover:to-amber-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-h-[44px] text-sm sm:text-base"
             >
               {primaryButtonText}
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center px-8 py-4 border-2 border-amber-400 text-amber-600 font-semibold rounded-lg hover:bg-amber-400 hover:text-white transition-all duration-200"
+              className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-amber-400 text-amber-600 font-semibold rounded-lg hover:bg-amber-400 hover:text-white transition-all duration-200 min-h-[44px] text-sm sm:text-base"
             >
               Contact Us
             </Link>

@@ -16,13 +16,13 @@ const PrivacyPolicy = () => {
         </div>
       </section>
 
-      <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 lg:p-12">
-          <h1 className="text-3xl font-bold text-gray-900 font-serif mb-8">
+      <div className="mx-auto max-w-4xl px-4 py-12 sm:py-16 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 lg:p-12">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 font-serif mb-6 sm:mb-8">
             Privacy Policy
           </h1>
 
-          <div className="prose prose-lg max-w-none text-gray-700">
+          <div className="prose prose-sm sm:prose-lg max-w-none text-gray-700">
             <p className="mb-6">
               <strong>Last updated:</strong> January 1, 2024
             </p>

@@ -111,73 +111,73 @@ export default function CompanyOverview({
 
   return (
     <section 
-      className={`px-4 py-20 sm:px-6 lg:px-8 ${className}`}
+      className={`px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8 ${className}`}
       style={{ backgroundColor }}
     >
       <div className="mx-auto max-w-6xl">
-        <div className="text-center mb-16">
-          <h2 className="mb-6 text-4xl font-bold text-gray-900 font-serif">
+        <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+          <h2 className="mb-4 sm:mb-6 text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-serif">
             {title}
           </h2>
           {showDecorator && (
-            <div className={`mx-auto w-24 h-1 bg-gradient-to-r ${decoratorColor} rounded-full mb-8`}></div>
+            <div className={`mx-auto w-20 sm:w-24 h-1 bg-gradient-to-r ${decoratorColor} rounded-full mb-6 sm:mb-8`}></div>
           )}
         </div>
         
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-6">
-            <p className="text-xl text-gray-700 leading-relaxed">
+          <div className="space-y-4 sm:space-y-6">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed">
               {mainDescription}
             </p>
             
             {stats.length > 0 && (
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {stats.map((stat, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                    <div className="text-2xl font-bold text-amber-600 mb-2">{stat.value}</div>
-                    <div className="text-sm font-medium text-gray-900 mb-1">{stat.label}</div>
+                  <div key={index} className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
+                    <div className="text-xl sm:text-2xl font-bold text-amber-600 mb-1 sm:mb-2">{stat.value}</div>
+                    <div className="text-xs sm:text-sm font-medium text-gray-900 mb-1">{stat.label}</div>
                     <div className="text-xs text-gray-600">{stat.description}</div>
                   </div>
                 ))}
               </div>
             )}
             
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">
               {secondaryDescription}
             </p>
           </div>
           
           {/* Right Content - Global Regions */}
-          <div className="relative">
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-              <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">
+          <div className="relative mt-8 lg:mt-0">
+            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6 text-center">
                 Serving Businesses Worldwide
               </h3>
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {regions.map((region, index) => {
                   const colors = getColorClasses(region.color);
                   return (
                     <div 
                       key={index}
-                      className={`flex items-center space-x-3 p-3 rounded-lg bg-gradient-to-r ${colors.bg} border ${colors.border}`}
+                      className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg bg-gradient-to-r ${colors.bg} border ${colors.border}`}
                     >
-                      <div className={`w-3 h-3 ${colors.dot} rounded-full`}></div>
-                      <span className="font-medium text-gray-900">{region.name}</span>
+                      <div className={`w-2 h-2 sm:w-3 sm:h-3 ${colors.dot} rounded-full flex-shrink-0`}></div>
+                      <span className="text-sm sm:text-base font-medium text-gray-900">{region.name}</span>
                     </div>
                   );
                 })}
               </div>
               
-              <div className="mt-6 text-center">
-                <span className="text-sm text-gray-500 italic">& beyond</span>
+              <div className="mt-4 sm:mt-6 text-center">
+                <span className="text-xs sm:text-sm text-gray-500 italic">& beyond</span>
               </div>
             </div>
             
             {/* Decorative elements */}
-            <div className={`absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r ${decoratorColor} rounded-full opacity-20`}></div>
-            <div className={`absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r ${decoratorColor} rounded-full opacity-30`}></div>
+            <div className={`absolute -top-2 sm:-top-4 -right-2 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r ${decoratorColor} rounded-full opacity-20`}></div>
+            <div className={`absolute -bottom-2 sm:-bottom-4 -left-2 sm:-left-4 w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-r ${decoratorColor} rounded-full opacity-30`}></div>
           </div>
         </div>
       </div>
