@@ -128,7 +128,7 @@ const Footer = () => {
           <p className="text-xs sm:text-sm text-gray-500 text-center md:text-left mb-3 md:mb-0">
             © {currentYear} CFO EDGE360. All rights reserved.
           </p>
-          <img src="/payments.webp" alt="Payment methods" className="h-6 sm:h-8 w-auto" />
+          <img src="/payments.webp" alt="Payment methods" className="h-auto w-auto" />
         </div>
       </div>
     </footer>
