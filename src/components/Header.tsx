@@ -20,10 +20,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-amber-500 shadow-md">
-              <Building2 className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-xl font-bold font-serif text-gray-900">CFO EDGE360</span>
+            <img src="/logo.png" alt="CFO Edge 360" className="h-10" />
           </Link>
 
           {/* Desktop Navigation */}

@@ -11,10 +11,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             {/* Logo */}
             <div className="flex items-center mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-amber-400 to-amber-500 mr-3">
-                <span className="text-white font-bold text-lg">360</span>
-              </div>
-              <h3 className="text-xl font-bold">CFO EDGE360</h3>
+              <img src="/logo.png" alt="CFO Edge 360" className="h-12" />
             </div>
 
             <p className="mb-6 text-gray-600 text-sm leading-relaxed">
