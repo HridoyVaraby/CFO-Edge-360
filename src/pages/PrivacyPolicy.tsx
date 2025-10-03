@@ -99,7 +99,7 @@ const PrivacyPolicy = () => {
               If you have any questions about this Privacy Policy or our privacy practices, please contact us at:
             </p>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="mb-2"><strong>Email:</strong> privacy@cfoedge360.com</p>
+              <p className="mb-2"><strong>Email:</strong> reaz@cfoedge360.com</p>
               <p><strong>Phone:</strong> +1 (555) 123-4567</p>
             </div>
           </div>

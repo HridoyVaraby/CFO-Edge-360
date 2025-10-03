@@ -101,7 +101,7 @@ const CookiePolicy = () => {
               If you have questions about our use of cookies, please contact us:
             </p>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="mb-2"><strong>Email:</strong> privacy@cfoedge360.com</p>
+              <p className="mb-2"><strong>Email:</strong> reaz@cfoedge360.com</p>
               <p><strong>Phone:</strong> +1 (555) 123-4567</p>
             </div>
 

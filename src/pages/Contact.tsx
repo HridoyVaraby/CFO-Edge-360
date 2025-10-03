@@ -83,7 +83,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-semibold text-gray-900">Email</h3>
-                    <p className="text-sm sm:text-base text-gray-600">contact@cfoedge360.com</p>
+                    <p className="text-sm sm:text-base text-gray-600">reaz@cfoedge360.com</p>
                     <p className="text-xs sm:text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
                   </div>
                 </div>
@@ -261,7 +261,7 @@ const Contact = () => {
                 {submitStatus === 'error' && (
                   <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                     <p className="text-red-800 text-sm">
-                      Something went wrong. Please try again or email us directly at contact@cfoedge360.com
+                      Something went wrong. Please try again or email us directly at reaz@cfoedge360.com
                     </p>
                   </div>
                 )}
