@@ -46,23 +46,24 @@ export default function CompanyOverview({
       description: "Full-spectrum CFO services"
     },
     {
-      value: "4",
-      label: "Continents",
-      description: "Global reach & expertise"
+      value: "Global",
+      label: "Worldwide Reach",
+      description: "Serving clients globally"
     }
   ],
   regions = [
     { name: "USA", color: "blue" },
     { name: "Europe", color: "green" },
     { name: "Canada", color: "red" },
-    { name: "Australia", color: "purple" }
+    { name: "Australia", color: "purple" },
+    { name: "All Over The World", color: "indigo" }
   ],
   backgroundColor = "#fffaeb",
   className = "",
   showDecorator = true,
   decoratorColor = "from-amber-400 to-amber-500"
 }: CompanyOverviewProps) {
-  
+
   const getColorClasses = (color: string) => {
     const colorMap = {
       blue: {
@@ -110,7 +111,7 @@ export default function CompanyOverview({
   };
 
   return (
-    <section 
+    <section
       className={`px-4 py-12 sm:py-16 lg:py-20 sm:px-6 lg:px-8 ${className}`}
       style={{ backgroundColor }}
     >
@@ -123,14 +124,14 @@ export default function CompanyOverview({
             <div className={`mx-auto w-20 sm:w-24 h-1 bg-gradient-to-r ${decoratorColor} rounded-full mb-6 sm:mb-8`}></div>
           )}
         </div>
-        
+
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-4 sm:space-y-6">
             <p className="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed">
               {mainDescription}
             </p>
-            
+
             {stats.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {stats.map((stat, index) => (
@@ -142,39 +143,54 @@ export default function CompanyOverview({
                 ))}
               </div>
             )}
-            
+
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed">
               {secondaryDescription}
             </p>
           </div>
-          
+
           {/* Right Content - Global Regions */}
           <div className="relative mt-8 lg:mt-0">
             <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100">
               <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6 text-center">
                 Serving Businesses Worldwide
               </h3>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {regions.map((region, index) => {
-                  const colors = getColorClasses(region.color);
-                  return (
-                    <div 
-                      key={index}
-                      className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg bg-gradient-to-r ${colors.bg} border ${colors.border}`}
-                    >
-                      <div className={`w-2 h-2 sm:w-3 sm:h-3 ${colors.dot} rounded-full flex-shrink-0`}></div>
-                      <span className="text-sm sm:text-base font-medium text-gray-900">{region.name}</span>
-                    </div>
-                  );
-                })}
-              </div>
-              
-              <div className="mt-4 sm:mt-6 text-center">
-                <span className="text-xs sm:text-sm text-gray-500 italic">& beyond</span>
+
+              <div className="space-y-3 sm:space-y-4">
+                {/* First 4 regions in 2x2 grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {regions.slice(0, 4).map((region, index) => {
+                    const colors = getColorClasses(region.color);
+                    return (
+                      <div
+                        key={index}
+                        className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg bg-gradient-to-r ${colors.bg} border ${colors.border}`}
+                      >
+                        <div className={`w-2 h-2 sm:w-3 sm:h-3 ${colors.dot} rounded-full flex-shrink-0`}></div>
+                        <span className="text-sm sm:text-base font-medium text-gray-900">{region.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Worldwide region as full-width box */}
+                {regions.length > 4 && (
+                  <div className="w-full">
+                    {(() => {
+                      const worldwideRegion = regions[4];
+                      const colors = getColorClasses(worldwideRegion.color);
+                      return (
+                        <div className={`flex items-center justify-center space-x-2 sm:space-x-3 p-3 sm:p-4 rounded-lg bg-gradient-to-r ${colors.bg} border ${colors.border}`}>
+                          <div className={`w-2 h-2 sm:w-3 sm:h-3 ${colors.dot} rounded-full flex-shrink-0`}></div>
+                          <span className="text-sm sm:text-base font-medium text-gray-900">{worldwideRegion.name}</span>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
               </div>
             </div>
-            
+
             {/* Decorative elements */}
             <div className={`absolute -top-2 sm:-top-4 -right-2 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r ${decoratorColor} rounded-full opacity-20`}></div>
             <div className={`absolute -bottom-2 sm:-bottom-4 -left-2 sm:-left-4 w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-r ${decoratorColor} rounded-full opacity-30`}></div>
