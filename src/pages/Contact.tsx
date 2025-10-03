@@ -128,7 +128,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Service Areas */}
+              {/*
               <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-200">
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
                   Our Expertise Areas
@@ -150,7 +150,7 @@ const Contact = () => {
                     </div>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Contact Form */}
