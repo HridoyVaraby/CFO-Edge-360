@@ -144,7 +144,8 @@ const TermsConditions = () => {
             </p>
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="mb-2"><strong>Email:</strong> reaz@cfoedge360.com</p>
-              <p className="mb-2"><strong>Phone:</strong> +1 (555) 123-4567</p>
+              <p className="mb-2"><strong>Phone:</strong> +1 505 523 2471</p>
+              <p className="mb-2"><strong>Bangladesh:</strong> +880 1713-301465</p>
               <p><strong>Address:</strong> [Business Address]</p>
             </div>
 

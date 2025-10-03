@@ -102,7 +102,8 @@ const CookiePolicy = () => {
             </p>
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="mb-2"><strong>Email:</strong> reaz@cfoedge360.com</p>
-              <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+              <p><strong>Phone:</strong> +1 505 523 2471</p>
+              <p><strong>Bangladesh:</strong> +880 1713-301465</p>
             </div>
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Updates to This Policy</h2>
