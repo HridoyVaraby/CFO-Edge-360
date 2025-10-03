@@ -119,13 +119,6 @@ const Footer = () => {
                   +88 01973 301465
                 </a>
               </div>
-              <div className="flex items-start">
-                <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-2 sm:mr-3 mt-0.5 text-gray-400 flex-shrink-0" />
-                <span className="text-gray-400 text-sm sm:text-base">
-                  Serving USA, Europe,<br />
-                  Canada, and Australia
-                </span>
-              </div>
             </div>
           </div>
         </div>
