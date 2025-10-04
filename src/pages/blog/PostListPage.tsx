@@ -241,7 +241,7 @@ const PostListPage: React.FC = () => {
                 ? `Search Results`
                 : 'Financial Insights & Expertise'}
             </h1>
-            <p className="mx-auto mb-6 sm:mb-8 max-w-3xl text-lg sm:text-xl lg:text-2xl text-gray-300 leading-relaxed px-4 sm:px-0">
+            <p className="mx-auto mb-6 sm:mb-8 max-w-3xl text-lg sm:text-xl lg:text-2xl text-white leading-relaxed px-4 sm:px-0">
               {searchQuery 
                 ? `Showing results for "${searchQuery}"`
                 : 'Strategic financial guidance and expert insights to help your business thrive in today\'s competitive landscape'}

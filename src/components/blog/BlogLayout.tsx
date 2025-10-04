@@ -1,20 +1,14 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../Header';
 import Footer from '../Footer';
 import SEO from './SEO';
 import BlogErrorBoundary from './BlogErrorBoundary';
-import { ChevronRight, Home } from 'lucide-react';
 
 interface BlogLayoutProps {
   children: React.ReactNode;
   title?: string;
   description?: string;
-  breadcrumbs?: Array<{
-    label: string;
-    href?: string;
-  }>;
   className?: string;
   // SEO-specific props
   canonical?: string;
@@ -28,7 +22,6 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({
   children,
   title = 'CFO Edge 360 Blog',
   description = 'Insights, strategies, and expert advice to help you navigate your financial journey',
-  breadcrumbs = [],
   className = '',
   canonical,
   type = 'website',
@@ -36,47 +29,6 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({
   keywords,
   structuredData
 }) => {
-  const location = useLocation();
-
-  // Generate default breadcrumbs based on current path
-  const getDefaultBreadcrumbs = () => {
-    const pathSegments = location.pathname.split('/').filter(Boolean);
-    const defaultBreadcrumbs = [
-      { label: 'Home', href: '/' }
-    ];
-
-    if (pathSegments.includes('posts')) {
-      defaultBreadcrumbs.push({ label: 'Blog', href: '/posts' });
-    }
-
-    if (pathSegments.includes('post') && pathSegments.length > 1) {
-      const postSlug = pathSegments[pathSegments.length - 1];
-      defaultBreadcrumbs.push({ 
-        label: 'Post', 
-        href: `/post/${postSlug}` 
-      });
-    }
-
-    if (pathSegments.includes('category') && pathSegments.length > 1) {
-      const categorySlug = pathSegments[pathSegments.length - 1];
-      defaultBreadcrumbs.push({ 
-        label: `Category: ${categorySlug}`, 
-        href: `/category/${categorySlug}` 
-      });
-    }
-
-    if (pathSegments.includes('tag') && pathSegments.length > 1) {
-      const tagSlug = pathSegments[pathSegments.length - 1];
-      defaultBreadcrumbs.push({ 
-        label: `Tag: ${tagSlug}`, 
-        href: `/tag/${tagSlug}` 
-      });
-    }
-
-    return defaultBreadcrumbs;
-  };
-
-  const finalBreadcrumbs = breadcrumbs.length > 0 ? breadcrumbs : getDefaultBreadcrumbs();
 
   return (
     <>
@@ -293,42 +245,7 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({
         {/* Header */}
         <Header />
 
-        {/* Breadcrumb Navigation */}
-        {finalBreadcrumbs.length > 1 && (
-          <nav 
-            className="bg-gray-50 border-b border-gray-200" 
-            aria-label="Breadcrumb"
-          >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
-              <ol className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm overflow-x-auto">
-                {finalBreadcrumbs.map((crumb, index) => (
-                  <li key={index} className="flex items-center flex-shrink-0">
-                    {index === 0 && (
-                      <Home className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-gray-400" />
-                    )}
-                    
-                    {crumb.href ? (
-                      <Link
-                        to={crumb.href}
-                        className="text-gray-600 hover:text-gray-900 focus:text-gray-900 transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-md px-1 py-0.5 -mx-1 -my-0.5 whitespace-nowrap"
-                      >
-                        {crumb.label}
-                      </Link>
-                    ) : (
-                      <span className="text-gray-900 font-medium whitespace-nowrap">
-                        {crumb.label}
-                      </span>
-                    )}
-                    
-                    {index < finalBreadcrumbs.length - 1 && (
-                      <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 mx-1 sm:mx-2 text-gray-400 flex-shrink-0" />
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </nav>
-        )}
+
 
         {/* Main Content */}
         <main className={`flex-1 blog-content blog-fade-in ${className}`}>
