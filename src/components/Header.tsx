@@ -9,10 +9,20 @@ const Header = () => {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
+    { name: 'Blog', href: '/posts' },
     { name: 'Contact', href: '/contact' },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path === '/posts') {
+      // Show Blog as active for all blog-related routes
+      return location.pathname === '/posts' || 
+             location.pathname.startsWith('/post/') || 
+             location.pathname.startsWith('/category/') || 
+             location.pathname.startsWith('/tag/');
+    }
+    return location.pathname === path;
+  };
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
