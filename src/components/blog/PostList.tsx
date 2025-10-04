@@ -25,7 +25,7 @@ interface PostListProps {
 
 
 
-// Pagination component
+// Modern Pagination component
 const Pagination: React.FC<{
   currentPage: number;
   totalPages: number;
@@ -69,53 +69,55 @@ const Pagination: React.FC<{
   };
 
   return (
-    <nav className="flex items-center justify-center gap-1 sm:gap-2 mt-8 sm:mt-12 px-4" aria-label="Pagination">
-      {/* Previous button */}
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="inline-flex items-center gap-1 px-3 sm:px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50 focus:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-        aria-label="Go to previous page"
-      >
-        <ChevronLeft className="h-4 w-4" />
-        <span className="hidden sm:inline">Previous</span>
-      </button>
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      <nav className="flex items-center justify-center gap-2" aria-label="Pagination">
+        {/* Previous button */}
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="inline-flex items-center gap-2 px-4 py-3 text-sm font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+          aria-label="Go to previous page"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          <span className="hidden sm:inline">Previous</span>
+        </button>
 
-      {/* Page numbers - Responsive display */}
-      <div className="flex items-center gap-1 overflow-x-auto max-w-[200px] sm:max-w-none">
-        {getPageNumbers().map((page, index) => (
-          <React.Fragment key={index}>
-            {page === '...' ? (
-              <span className="px-2 sm:px-3 py-2 text-sm text-gray-500 flex-shrink-0">...</span>
-            ) : (
-              <button
-                onClick={() => onPageChange(page as number)}
-                className={`px-2.5 sm:px-3 py-2.5 sm:py-2 text-sm font-medium rounded-lg transition-colors duration-200 min-h-[44px] sm:min-h-[auto] flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 ${
-                  currentPage === page
-                    ? 'bg-blue-900 text-white'
-                    : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:bg-gray-50'
-                }`}
-                aria-label={`Go to page ${page}`}
-                aria-current={currentPage === page ? 'page' : undefined}
-              >
-                {page}
-              </button>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
+        {/* Page numbers */}
+        <div className="flex items-center gap-1 mx-4">
+          {getPageNumbers().map((page, index) => (
+            <React.Fragment key={index}>
+              {page === '...' ? (
+                <span className="px-3 py-2 text-sm text-gray-400">...</span>
+              ) : (
+                <button
+                  onClick={() => onPageChange(page as number)}
+                  className={`px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 ${
+                    currentPage === page
+                      ? 'bg-amber-500 text-white shadow-lg'
+                      : 'text-gray-700 bg-gray-50 hover:bg-gray-100'
+                  }`}
+                  aria-label={`Go to page ${page}`}
+                  aria-current={currentPage === page ? 'page' : undefined}
+                >
+                  {page}
+                </button>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
 
-      {/* Next button */}
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="inline-flex items-center gap-1 px-3 sm:px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50 focus:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-        aria-label="Go to next page"
-      >
-        <span className="hidden sm:inline">Next</span>
-        <ChevronRight className="h-4 w-4" />
-      </button>
-    </nav>
+        {/* Next button */}
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="inline-flex items-center gap-2 px-4 py-3 text-sm font-semibold text-gray-600 bg-gray-50 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+          aria-label="Go to next page"
+        >
+          <span className="hidden sm:inline">Next</span>
+          <ChevronRight className="h-4 w-4" />
+        </button>
+      </nav>
+    </div>
   );
 };
 
@@ -154,18 +156,24 @@ const PostList: React.FC<PostListProps> = ({
   }
 
   return (
-    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
-      {/* Posts Grid - Optimized for mobile */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+    <div className={className}>
+      {/* Posts Grid - Modern responsive layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10">
         {/* Render actual posts */}
-        {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+        {posts.map((post, index) => (
+          <div 
+            key={post.id} 
+            className="animate-fade-in"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <PostCard post={post} />
+          </div>
         ))}
 
         {/* Render skeleton loaders while loading */}
         {loading && (
           <>
-            {Array.from({ length: 6 }).map((_, index) => (
+            {Array.from({ length: 12 }).map((_, index) => (
               <PostCardSkeleton key={`skeleton-${index}`} />
             ))}
           </>
@@ -174,34 +182,44 @@ const PostList: React.FC<PostListProps> = ({
 
       {/* Empty state */}
       {!loading && !error && posts.length === 0 && (
-        <div className="text-center py-12 animate-fade-in">
-          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Posts Found</h3>
-            <p className="text-gray-600">
-              There are no blog posts available at the moment. Please check back later.
+        <div className="text-center py-16 animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-12 max-w-md mx-auto">
+            <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold font-serif text-gray-900 mb-3">No Articles Found</h3>
+            <p className="text-gray-600 leading-relaxed">
+              We couldn't find any articles matching your criteria. Try adjusting your filters or search terms.
             </p>
           </div>
         </div>
       )}
 
-      {/* Pagination */}
+      {/* Modern Pagination */}
       {!loading && !error && posts.length > 0 && onPageChange && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
+        <div className="mt-16">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
+        </div>
       )}
 
       {/* Load More Button (alternative to pagination) */}
       {!loading && !error && posts.length > 0 && hasMore && onLoadMore && !onPageChange && (
-        <div className="text-center mt-8 sm:mt-12 px-4">
+        <div className="text-center mt-16">
           <button
             onClick={onLoadMore}
-            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-blue-900 text-white font-semibold rounded-xl hover:bg-amber-600 focus:bg-amber-600 transition-colors duration-200 shadow-lg hover:shadow-xl focus:shadow-xl transform hover:-translate-y-1 focus:-translate-y-1 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 w-full sm:w-auto"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-gray-900 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 no-underline"
             aria-label="Load more blog posts"
           >
-            Load More Posts
+            <span className="text-white">Load More Articles</span>
+            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </button>
         </div>
       )}

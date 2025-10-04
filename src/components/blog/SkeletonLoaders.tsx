@@ -9,29 +9,18 @@ const SkeletonBase: React.FC<{ className?: string }> = ({ className = '' }) => (
 
 // Skeleton loader for PostCard components
 export const PostCardSkeleton: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <div className={`bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 animate-fade-in ${className}`}>
-    {/* Featured image skeleton */}
-    <SkeletonBase className="w-full h-48 sm:h-56 rounded-none" />
+  <div className={`bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 animate-fade-in ${className}`}>
+    {/* Featured image skeleton with 16:9 aspect ratio */}
+    <div className="aspect-video">
+      <SkeletonBase className="w-full h-full rounded-none" />
+    </div>
     
     {/* Content skeleton */}
-    <div className="p-6">
-      {/* Title skeleton */}
-      <div className="mb-3">
-        <SkeletonBase className="h-6 rounded mb-2" />
-        <SkeletonBase className="h-6 rounded w-3/4" />
-      </div>
-      
-      {/* Excerpt skeleton */}
-      <div className="mb-4 space-y-2">
-        <SkeletonBase className="h-4 rounded" />
-        <SkeletonBase className="h-4 rounded" />
-        <SkeletonBase className="h-4 rounded w-2/3" />
-      </div>
-      
+    <div className="p-6 sm:p-8">
       {/* Meta information skeleton */}
       <div className="flex items-center gap-4 mb-4">
         <div className="flex items-center gap-2">
-          <SkeletonBase className="h-4 w-4 rounded" />
+          <SkeletonBase className="w-6 h-6 rounded-full" />
           <SkeletonBase className="h-4 w-20 rounded" />
         </div>
         <div className="flex items-center gap-2">
@@ -40,11 +29,21 @@ export const PostCardSkeleton: React.FC<{ className?: string }> = ({ className =
         </div>
       </div>
       
-      {/* Read more button skeleton */}
-      <div className="flex items-center gap-2">
-        <SkeletonBase className="h-4 w-20 rounded" />
-        <SkeletonBase className="h-4 w-4 rounded" />
+      {/* Title skeleton */}
+      <div className="mb-4">
+        <SkeletonBase className="h-7 rounded mb-2" />
+        <SkeletonBase className="h-7 rounded w-3/4" />
       </div>
+      
+      {/* Excerpt skeleton */}
+      <div className="mb-6 space-y-2">
+        <SkeletonBase className="h-4 rounded" />
+        <SkeletonBase className="h-4 rounded" />
+        <SkeletonBase className="h-4 rounded w-2/3" />
+      </div>
+      
+      {/* Read more button skeleton */}
+      <SkeletonBase className="h-12 w-32 rounded-xl" />
     </div>
   </div>
 );
