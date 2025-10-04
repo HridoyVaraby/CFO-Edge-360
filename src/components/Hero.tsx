@@ -9,9 +9,6 @@ const Hero = () => {
         {/* Subtle gold accent curves */}
         <div className="absolute top-20 right-10 w-64 h-64 bg-gradient-to-br from-amber-500/20 to-amber-400/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-blue-500/10 to-slate-600/20 rounded-full blur-3xl"></div>
-
-        {/* Geometric accent */}
-        <div className="absolute top-1/3 right-1/4 w-2 h-32 bg-gradient-to-b from-amber-400/80 to-transparent rounded-full transform rotate-12"></div>
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-12 sm:pb-16">
