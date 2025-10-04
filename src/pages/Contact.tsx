@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageHero from '../components/PageHero';
-import { Mail, Phone, MapPin, Send, Linkedin, Calendar, Clock, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Calendar, Clock, Globe, Facebook } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -393,6 +393,15 @@ const Contact = () => {
                 >
                   <Linkedin className="h-4 w-4" />
                   <span className="text-sm font-medium">LinkedIn</span>
+                </a>
+                <a
+                  href="https://www.facebook.com/cfoedge360/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                >
+                  <Facebook className="h-4 w-4" />
+                  <span className="text-sm font-medium">Facebook</span>
                 </a>
                 <a
                   href="https://wa.me/8801973301465"

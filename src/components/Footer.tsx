@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Linkedin, Mail, Phone } from 'lucide-react';
+import { Linkedin, Mail, Phone, Facebook } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -27,6 +27,14 @@ const Footer = () => {
                 className="hover:text-amber-400 transition-colors duration-200"
               >
                 <Linkedin className="h-4 w-4 sm:h-5 sm:w-5" color="#0077b5" />
+              </a>
+              <a
+                href="https://www.facebook.com/cfoedge360/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-amber-400 transition-colors duration-200"
+              >
+                <Facebook className="h-4 w-4 sm:h-5 sm:w-5" color="#1877f2" />
               </a>
               <a
                 href="https://wa.me/8801973301465"
