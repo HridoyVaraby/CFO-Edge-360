@@ -45,8 +45,8 @@ const PostDetail: React.FC<PostDetailProps> = ({
   if (error || !post) {
     return (
       <div className={`py-8 px-4 sm:px-6 lg:px-8 ${className}`}>
-        <ErrorDisplay 
-          error={error || 'Post not found'} 
+        <ErrorDisplay
+          error={error || 'Post not found'}
           onRetry={onRetry}
           isRetrying={isRetrying}
           retryCount={retryCount}
@@ -95,7 +95,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
       try {
         setLoadingRelated(true);
         const categoryIds = categories.map((cat: any) => cat.id);
-        
+
         const response = await wordpressAPI.getPosts({
           categories: categoryIds,
           per_page: 3,
@@ -138,53 +138,49 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
 
             {/* Title */}
-            <h1 
+            <h1
               className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold font-serif text-gray-900 leading-tight mb-6 lg:mb-8 blog-content"
               dangerouslySetInnerHTML={{ __html: post.title.rendered }}
             />
 
             {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 mb-8 pb-8 border-b border-gray-200">
-              {/* Date */}
-              <div className="flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-gray-400" />
-                <div>
-                  <time dateTime={post.date} className="font-medium text-gray-900">
+            <div className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6 mb-8 border border-gray-200 shadow-sm">
+              <div className="flex flex-wrap items-center gap-6">
+                {/* Date */}
+                <div className="flex items-center gap-3 bg-white rounded-lg px-4 py-3 shadow-sm border border-gray-100">
+                  <Calendar className="h-5 w-5 text-blue-600" />
+                  <time dateTime={post.date} className="font-semibold text-gray-900 text-sm">
                     {formatDate(post.date)}
                   </time>
-                  <p className="text-xs text-gray-500">Published</p>
                 </div>
-              </div>
 
-              {/* Reading time */}
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-gray-400" />
-                <div>
-                  <span className="font-medium text-gray-900">{readingTime} min</span>
-                  <p className="text-xs text-gray-500">Read time</p>
+                {/* Reading time */}
+                <div className="flex items-center gap-3 bg-white rounded-lg px-4 py-3 shadow-sm border border-gray-100">
+                  <Clock className="h-5 w-5 text-amber-600" />
+                  <span className="font-semibold text-gray-900 text-sm">{readingTime} min read</span>
                 </div>
+
+                {/* Categories */}
+                {categories.length > 0 && (
+                  <div className="flex items-center gap-3 bg-white rounded-lg px-4 py-3 shadow-sm border border-gray-100">
+                    <Folder className="h-5 w-5 text-purple-600" />
+                    <div className="flex flex-wrap gap-2">
+                      {categories.map((category: any) => (
+                        <span
+                          key={category.id}
+                          className="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs font-semibold rounded-full shadow-sm hover:shadow-md transition-shadow"
+                        >
+                          {category.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Categories Only */}
-            {categories.length > 0 && (
-              <div className="flex flex-wrap gap-3 mb-10">
-                <Folder className="h-5 w-5 text-gray-400 mt-1" />
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((category: any) => (
-                    <span
-                      key={category.id}
-                      className="px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 text-sm font-semibold rounded-full"
-                    >
-                      {category.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Post Content */}
-            <div 
+            <div
               className="prose prose-lg max-w-none blog-content
                 prose-headings:font-serif prose-headings:text-gray-900 prose-headings:leading-tight
                 prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-lg prose-p:mb-6
@@ -226,7 +222,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
                           </div>
                         )}
                         <div className="p-4">
-                          <h3 
+                          <h3
                             className="font-bold font-serif text-gray-900 group-hover:text-amber-600 transition-colors duration-200 line-clamp-2 mb-2"
                             dangerouslySetInnerHTML={{ __html: relatedPost.title.rendered }}
                           />

@@ -9,7 +9,7 @@ const Header = () => {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
-    { name: 'Blog', href: '/posts' },
+    { name: 'Tools and Tips', href: '/posts' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -96,7 +96,7 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className="block mt-4 px-3 py-2 bg-amber-500 text-white font-semibold rounded-xl text-center hover:bg-gray-900 transition-colors duration-200"
               >
-                Book Consultation
+                Book A Consultation
               </a>
             </div>
           </div>
