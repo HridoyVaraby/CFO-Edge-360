@@ -94,19 +94,19 @@ const Services = () => {
       />
 
       {/* Services Grid */}
-      <section className="py-12 sm:py-16">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="mx-auto max-w-7xl">
           <div className="space-y-0">
             {services.map((service, index) => {
               const Icon = service.icon;
               const isEven = index % 2 === 0;
-              const bgColor = isEven ? 'bg-white' : 'bg-gradient-to-br from-gray-50 to-white';
+              const bgColor = isEven ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900' : 'bg-white';
               
               return (
                 <div
                   key={service.id}
                   id={service.id}
-                  className={`${bgColor} border-b border-gray-100 last:border-b-0`}
+                  className={`${bgColor} border-b ${isEven ? 'border-gray-700 rounded-md' : 'border-gray-200'} last:border-b-0`}
                 >
                   <div className="px-4 py-16 sm:py-20 sm:px-6 lg:px-8">
                     <div className={`grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center max-w-6xl mx-auto ${
@@ -120,10 +120,10 @@ const Services = () => {
                               <Icon className="h-7 w-7 sm:h-8 sm:w-8" />
                             </div>
                             <div className="flex-1">
-                              <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full mb-2">
+                              <span className={`inline-block px-3 py-1 ${isEven ? 'bg-amber-500/20 text-amber-300' : 'bg-amber-100 text-amber-800'} text-xs font-medium rounded-full mb-2`}>
                                 Service #{index + 1}
                               </span>
-                              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 font-serif leading-tight">
+                              <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${isEven ? 'text-white' : 'text-gray-900'} font-serif leading-tight`}>
                                 {service.title}
                               </h2>
                             </div>
@@ -132,7 +132,7 @@ const Services = () => {
                         
                         <div className="space-y-4 sm:space-y-5">
                           {service.description.map((paragraph, pIndex) => (
-                            <p key={pIndex} className="text-base sm:text-lg text-gray-700 leading-relaxed">
+                            <p key={pIndex} className={`text-base sm:text-lg ${isEven ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
                               {paragraph}
                             </p>
                           ))}
@@ -153,7 +153,7 @@ const Services = () => {
                       <div className={`${isEven ? '' : 'lg:col-start-1'} mt-8 lg:mt-0`}>
                         <div className="relative">
                           {/* Main Card */}
-                          <div className={`${isEven ? 'bg-gradient-to-br from-gray-50 to-gray-100' : 'bg-white'} rounded-3xl p-8 sm:p-10 shadow-xl border border-gray-200 relative overflow-hidden`}>
+                          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-gray-200 relative overflow-hidden">
                             {/* Background Pattern */}
                             <div className="absolute inset-0 opacity-5">
                               <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-amber-400 to-amber-500 rounded-full -translate-y-20 translate-x-20"></div>
