@@ -10,6 +10,7 @@ interface BlogLayoutProps {
   title?: string;
   description?: string;
   className?: string;
+  hero?: React.ReactNode;
   // SEO-specific props
   canonical?: string;
   type?: 'website' | 'article';
@@ -23,6 +24,7 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({
   title = 'CFO Edge 360 Blog',
   description = 'Insights, strategies, and expert advice to help you navigate your financial journey',
   className = '',
+  hero,
   canonical,
   type = 'website',
   image,
@@ -245,7 +247,8 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({
         {/* Header */}
         <Header />
 
-
+        {/* Hero Section (if provided) */}
+        {hero && hero}
 
         {/* Main Content */}
         <main className={`flex-1 blog-content blog-fade-in ${className}`}>
