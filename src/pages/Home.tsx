@@ -113,12 +113,12 @@ const Home = () => {
           __html: JSON.stringify(faqSchema)
         }}
       />
-      
+
       {/* Hero Section */}
       <Hero />
       {/* Company Overview */}
       <CompanyOverview />
-      
+
       {/* Services Snapshot */}
       <section className="px-4 py-12 sm:py-16 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
         <div className="mx-auto max-w-7xl">
@@ -127,11 +127,11 @@ const Home = () => {
               Comprehensive CFO Services
             </h2>
             <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4 sm:px-0">
-              From strategic planning to operational excellence, we provide the full spectrum 
+              From strategic planning to operational excellence, we provide the full spectrum
               of CFO services tailored to your business needs.
             </p>
           </div>
-          
+
           <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {services.map((service, index) => {
               const Icon = service.icon;
@@ -177,50 +177,44 @@ const Home = () => {
                   <p className="text-sm text-gray-600">Virtual CFO Services</p>
                 </div>
               </div>
-              
+
               {/* Personal Message */}
               <div className="space-y-4">
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  I am a seasoned financial professional with extensive experience in strategic planning, 
-                  financial analysis, and business growth optimization. With a passion for precision and 
-                  a deep understanding of modern financial systems, I founded CFO EDGE360 to provide 
+                  I am a seasoned financial professional with extensive experience in strategic planning,
+                  financial analysis, and business growth optimization. With a passion for precision and
+                  a deep understanding of modern financial systems, I founded CFO EDGE360 to provide
                   reliable, client-focused services tailored to meet the unique needs of each business.
                 </p>
                 <p className="text-base text-gray-600 leading-relaxed">
-                  My mission is to help businesses achieve sustainable growth through strategic financial 
-                  guidance, operational excellence, and data-driven decision making. Every client partnership 
+                  My mission is to help businesses achieve sustainable growth through strategic financial
+                  guidance, operational excellence, and data-driven decision making. Every client partnership
                   is built on trust, transparency, and measurable results.
                 </p>
               </div>
-              
+
               {/* Signature Line */}
               <div className="pt-4 border-t border-gray-200">
                 <div className="space-y-1">
-                  <h4 className="text-xl font-bold text-gray-900">John Smith</h4>
+                  <h4 className="text-xl font-bold text-gray-900">Md. Reazul Haque (Reaz)</h4>
                   <p className="text-amber-600 font-medium">Founder & CEO</p>
                   <p className="text-sm text-gray-500">Certified Public Accountant (CPA)</p>
                 </div>
               </div>
             </div>
-            
+
             {/* Professional Photo */}
             <div className="lg:order-last">
               <div className="relative">
                 {/* Main Photo Container */}
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-                  {/* Placeholder for professional photo */}
-                  <div className="aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                    <div className="text-center space-y-4">
-                      <div className="w-24 h-24 mx-auto bg-gradient-to-r from-amber-400 to-amber-500 rounded-full flex items-center justify-center">
-                        <TrendingUp className="w-12 h-12 text-white" />
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-gray-600 font-medium">Professional Photo</p>
-                        <p className="text-sm text-gray-500">Coming Soon</p>
-                      </div>
-                    </div>
-                  </div>
-                  
+                  {/* Professional Photo */}
+                  <img
+                    src="/Reaz.webp"
+                    alt="Md. Reazul Haque (Reaz) - Founder & CEO of CFO EDGE360"
+                    className="aspect-[4/5] w-full object-cover object-center"
+                  />
+
                   {/* Overlay Elements */}
                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
                     <div className="flex items-center space-x-2">
@@ -229,7 +223,7 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Decorative Elements */}
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-amber-100 rounded-full opacity-60"></div>
                 <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-r from-amber-50 to-orange-50 rounded-full opacity-80"></div>
@@ -250,7 +244,7 @@ const Home = () => {
               Get answers to common questions about our virtual CFO services and how we can help your business grow.
             </p>
           </div>
-          
+
           <div className="space-y-4">
             {faqData.map((faq, index) => {
               const isOpen = openFaq === index;
@@ -263,15 +257,13 @@ const Home = () => {
                     <h3 className="text-lg sm:text-xl font-semibold text-white leading-tight pr-4">
                       {faq.question}
                     </h3>
-                    <ChevronDown 
-                      className={`h-5 w-5 text-amber-400 transition-transform duration-200 flex-shrink-0 ${
-                        isOpen ? 'rotate-180' : ''
-                      }`}
+                    <ChevronDown
+                      className={`h-5 w-5 text-amber-400 transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''
+                        }`}
                     />
                   </button>
-                  <div className={`overflow-hidden transition-all duration-300 ${
-                    isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                  }`}>
+                  <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}>
                     <div className="px-6 pb-6 sm:px-8 sm:pb-8">
                       <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
                         {faq.answer}
@@ -282,7 +274,7 @@ const Home = () => {
               );
             })}
           </div>
-          
+
           <div className="text-center mt-10 sm:mt-12">
             <p className="text-gray-300 mb-6">
               Have more questions? We'd love to discuss your specific needs.
