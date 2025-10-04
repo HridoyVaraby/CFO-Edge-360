@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PageHero from '../components/PageHero';
 import { 
   TrendingUp, 
   DollarSign, 
@@ -87,18 +88,10 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       {/* Hero Section */}
-      <section className="relative px-4 py-12 sm:py-16 sm:px-6 lg:px-8 bg-white">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 font-serif">
-            Our Services
-          </h1>
-          <p className="mx-auto mb-6 sm:mb-8 max-w-3xl text-lg sm:text-xl text-gray-600 leading-relaxed px-4 sm:px-0">
-            Comprehensive virtual CFO services designed to accelerate your business growth 
-            and optimize financial performance across all operational areas.
-          </p>
-          <div className="mx-auto w-24 sm:w-32 h-1 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full"></div>
-        </div>
-      </section>
+      <PageHero 
+        title="Our Services"
+        description="Comprehensive virtual CFO services designed to accelerate your business growth and optimize financial performance across all operational areas."
+      />
 
       {/* Services Grid */}
       <section className="py-12 sm:py-16">
