@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageHero from '../components/PageHero';
-import { Mail, Phone, MapPin, Send, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Calendar } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -70,6 +70,25 @@ const Contact = () => {
 
               {/* Contact Methods */}
               <div className="space-y-4 sm:space-y-6">
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 text-white flex-shrink-0">
+                    <Calendar className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900">Book a Consultation</h3>
+                    <p className="text-sm sm:text-base text-gray-600 mb-2">Schedule a free consultation directly</p>
+                    <a
+                      href="https://calendly.com/rupomreaz/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-4 py-2 bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 transition-colors duration-200 text-sm"
+                    >
+                      <Calendar className="h-4 w-4 mr-2" />
+                      Schedule Now
+                    </a>
+                  </div>
+                </div>
+
                 <div className="flex items-start space-x-3 sm:space-x-4">
                   <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-white flex-shrink-0">
                     <Mail className="h-5 w-5 sm:h-6 sm:w-6" />

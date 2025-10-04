@@ -42,12 +42,14 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Link
-              to="/contact"
+            <a
+              href="https://calendly.com/rupomreaz/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-amber-500 text-white font-semibold rounded-xl hover:bg-gray-900 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               Book A Consultation
-            </Link>
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -77,13 +79,15 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link
-                to="/contact"
+              <a
+                href="https://calendly.com/rupomreaz/"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsMenuOpen(false)}
                 className="block mt-4 px-3 py-2 bg-amber-500 text-white font-semibold rounded-xl text-center hover:bg-gray-900 transition-colors duration-200"
               >
                 Book Consultation
-              </Link>
+              </a>
             </div>
           </div>
         )}
