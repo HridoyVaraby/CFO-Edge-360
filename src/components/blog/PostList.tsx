@@ -1,7 +1,9 @@
 import React from 'react';
-import { RefreshCw, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Post } from '../../types/wordpress';
 import PostCard from './PostCard';
+import { PostCardSkeleton } from './SkeletonLoaders';
+import ErrorDisplay from './ErrorDisplay';
 
 interface PostListProps {
   posts: Post[];
@@ -14,58 +16,14 @@ interface PostListProps {
   totalPages?: number;
   onPageChange?: (page: number) => void;
   className?: string;
+  isRetrying?: boolean;
+  retryCount?: number;
+  maxRetries?: number;
 }
 
-// Skeleton loader component for individual post cards
-const PostCardSkeleton: React.FC = () => (
-  <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 animate-pulse">
-    {/* Image skeleton */}
-    <div className="w-full h-48 sm:h-56 bg-gray-200"></div>
-    
-    {/* Content skeleton */}
-    <div className="p-6">
-      {/* Title skeleton */}
-      <div className="mb-3">
-        <div className="h-6 bg-gray-200 rounded mb-2"></div>
-        <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-      </div>
-      
-      {/* Excerpt skeleton */}
-      <div className="mb-4">
-        <div className="h-4 bg-gray-200 rounded mb-2"></div>
-        <div className="h-4 bg-gray-200 rounded mb-2"></div>
-        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
-      </div>
-      
-      {/* Meta skeleton */}
-      <div className="flex items-center gap-4 mb-4">
-        <div className="h-4 bg-gray-200 rounded w-20"></div>
-        <div className="h-4 bg-gray-200 rounded w-24"></div>
-      </div>
-      
-      {/* Button skeleton */}
-      <div className="h-4 bg-gray-200 rounded w-20"></div>
-    </div>
-  </div>
-);
 
-// Error component
-const ErrorDisplay: React.FC<{ error: string; onRetry?: () => void }> = ({ error, onRetry }) => (
-  <div className="bg-white rounded-xl shadow-lg border border-red-200 p-8 text-center animate-fade-in">
-    <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-    <h3 className="text-lg font-semibold text-gray-900 mb-2">Unable to Load Posts</h3>
-    <p className="text-gray-600 mb-6">{error}</p>
-    {onRetry && (
-      <button
-        onClick={onRetry}
-        className="inline-flex items-center gap-2 px-6 py-3 bg-blue-900 text-white font-semibold rounded-xl hover:bg-amber-600 transition-colors duration-200"
-      >
-        <RefreshCw className="h-4 w-4" />
-        Try Again
-      </button>
-    )}
-  </div>
-);
+
+
 
 // Pagination component
 const Pagination: React.FC<{
@@ -111,31 +69,34 @@ const Pagination: React.FC<{
   };
 
   return (
-    <nav className="flex items-center justify-center gap-2 mt-12" aria-label="Pagination">
+    <nav className="flex items-center justify-center gap-1 sm:gap-2 mt-8 sm:mt-12 px-4" aria-label="Pagination">
       {/* Previous button */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+        className="inline-flex items-center gap-1 px-3 sm:px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50 focus:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+        aria-label="Go to previous page"
       >
         <ChevronLeft className="h-4 w-4" />
-        Previous
+        <span className="hidden sm:inline">Previous</span>
       </button>
 
-      {/* Page numbers */}
-      <div className="flex items-center gap-1">
+      {/* Page numbers - Responsive display */}
+      <div className="flex items-center gap-1 overflow-x-auto max-w-[200px] sm:max-w-none">
         {getPageNumbers().map((page, index) => (
           <React.Fragment key={index}>
             {page === '...' ? (
-              <span className="px-3 py-2 text-sm text-gray-500">...</span>
+              <span className="px-2 sm:px-3 py-2 text-sm text-gray-500 flex-shrink-0">...</span>
             ) : (
               <button
                 onClick={() => onPageChange(page as number)}
-                className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
+                className={`px-2.5 sm:px-3 py-2.5 sm:py-2 text-sm font-medium rounded-lg transition-colors duration-200 min-h-[44px] sm:min-h-[auto] flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 ${
                   currentPage === page
                     ? 'bg-blue-900 text-white'
-                    : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                    : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 focus:bg-gray-50'
                 }`}
+                aria-label={`Go to page ${page}`}
+                aria-current={currentPage === page ? 'page' : undefined}
               >
                 {page}
               </button>
@@ -148,9 +109,10 @@ const Pagination: React.FC<{
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+        className="inline-flex items-center gap-1 px-3 sm:px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 focus:bg-gray-50 focus:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+        aria-label="Go to next page"
       >
-        Next
+        <span className="hidden sm:inline">Next</span>
         <ChevronRight className="h-4 w-4" />
       </button>
     </nav>
@@ -167,21 +129,34 @@ const PostList: React.FC<PostListProps> = ({
   currentPage = 1,
   totalPages = 1,
   onPageChange,
-  className = ''
+  className = '',
+  isRetrying = false,
+  retryCount = 0,
+  maxRetries = 3
 }) => {
   // Show error state
   if (error && !loading) {
     return (
       <div className={`max-w-4xl mx-auto ${className}`}>
-        <ErrorDisplay error={error} onRetry={onRetry} />
+        <ErrorDisplay 
+          error={error} 
+          onRetry={onRetry}
+          isRetrying={isRetrying}
+          retryCount={retryCount}
+          maxRetries={maxRetries}
+          showBackButton={false}
+          showHomeButton={true}
+          size="medium"
+          variant="card"
+        />
       </div>
     );
   }
 
   return (
-    <div className={`max-w-7xl mx-auto ${className}`}>
-      {/* Posts Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
+      {/* Posts Grid - Optimized for mobile */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         {/* Render actual posts */}
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />
@@ -220,10 +195,11 @@ const PostList: React.FC<PostListProps> = ({
 
       {/* Load More Button (alternative to pagination) */}
       {!loading && !error && posts.length > 0 && hasMore && onLoadMore && !onPageChange && (
-        <div className="text-center mt-12">
+        <div className="text-center mt-8 sm:mt-12 px-4">
           <button
             onClick={onLoadMore}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-900 text-white font-semibold rounded-xl hover:bg-amber-600 transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-blue-900 text-white font-semibold rounded-xl hover:bg-amber-600 focus:bg-amber-600 transition-colors duration-200 shadow-lg hover:shadow-xl focus:shadow-xl transform hover:-translate-y-1 focus:-translate-y-1 min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 w-full sm:w-auto"
+            aria-label="Load more blog posts"
           >
             Load More Posts
           </button>

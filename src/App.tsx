@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import Header from './components/Header';
@@ -12,7 +12,13 @@ import CookiePolicy from './pages/CookiePolicy';
 import CancellationRefundPolicy from './pages/CancellationRefundPolicy';
 import TermsConditions from './pages/TermsConditions';
 import DeveloperCredit from './pages/DeveloperCredit';
-import { PostListPage, PostDetailPage, CategoryPage, TagPage } from './pages/blog';
+import LazyLoadFallback from './components/blog/LazyLoadFallback';
+
+// Lazy load blog components
+const PostListPage = lazy(() => import('./pages/blog/PostListPage'));
+const PostDetailPage = lazy(() => import('./pages/blog/PostDetailPage'));
+const CategoryPage = lazy(() => import('./pages/blog/CategoryPage'));
+const TagPage = lazy(() => import('./pages/blog/TagPage'));
 
 function App() {
   return (
@@ -94,11 +100,27 @@ function App() {
             </div>
           } />
           
-          {/* Blog Routes - using BlogLayout internally */}
-          <Route path="/posts" element={<PostListPage />} />
-          <Route path="/post/:slug" element={<PostDetailPage />} />
-          <Route path="/category/:slug" element={<CategoryPage />} />
-          <Route path="/tag/:slug" element={<TagPage />} />
+          {/* Blog Routes - using BlogLayout internally with lazy loading */}
+          <Route path="/posts" element={
+            <Suspense fallback={<LazyLoadFallback />}>
+              <PostListPage />
+            </Suspense>
+          } />
+          <Route path="/post/:slug" element={
+            <Suspense fallback={<LazyLoadFallback />}>
+              <PostDetailPage />
+            </Suspense>
+          } />
+          <Route path="/category/:slug" element={
+            <Suspense fallback={<LazyLoadFallback />}>
+              <CategoryPage />
+            </Suspense>
+          } />
+          <Route path="/tag/:slug" element={
+            <Suspense fallback={<LazyLoadFallback />}>
+              <TagPage />
+            </Suspense>
+          } />
         </Routes>
       </Router>
     </HelmetProvider>

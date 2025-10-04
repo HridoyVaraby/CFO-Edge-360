@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PostList from '../../components/blog/PostList';
 import BlogLayout from '../../components/blog/BlogLayout';
+import SEO from '../../components/blog/SEO';
 import { Post, Category, Tag, PostsResponse } from '../../types/wordpress';
 import { wordpressAPI } from '../../services/wordpress';
+import { useRetryWithMessages } from '../../hooks/useRetry';
 
 const PostListPage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -24,57 +26,77 @@ const PostListPage: React.FC = () => {
   const currentTag = searchParams.get('tag');
   const searchQuery = searchParams.get('search');
 
+  // Create fetch function for retry hook
+  const fetchData = useCallback(async () => {
+    // Fetch categories and tags for filters
+    const [categoriesData, tagsData] = await Promise.all([
+      wordpressAPI.getCategories({ hide_empty: true }),
+      wordpressAPI.getTags({ hide_empty: true })
+    ]);
+    
+    setCategories(categoriesData);
+    setTags(tagsData);
+
+    // Build query parameters for posts
+    const queryParams: any = {
+      page: currentPage,
+      per_page: 10,
+      _embed: true
+    };
+
+    // Add category filter if selected
+    if (currentCategory) {
+      const category = categoriesData.find(cat => cat.slug === currentCategory);
+      if (category) {
+        queryParams.categories = [category.id];
+      }
+    }
+
+    // Add tag filter if selected
+    if (currentTag) {
+      const tag = tagsData.find(t => t.slug === currentTag);
+      if (tag) {
+        queryParams.tags = [tag.id];
+      }
+    }
+
+    // Add search query if provided
+    if (searchQuery) {
+      queryParams.search = searchQuery;
+    }
+
+    const response: PostsResponse = await wordpressAPI.getPosts(queryParams);
+
+    setPosts(response.posts);
+    setPagination({
+      currentPage: response.currentPage,
+      totalPages: response.totalPages,
+      totalPosts: response.totalPosts
+    });
+
+    return response;
+  }, [currentPage, currentCategory, currentTag, searchQuery]);
+
+  // Set up retry hook
+  const retryLogic = useRetryWithMessages(fetchData, {
+    maxAttempts: 3,
+    initialDelay: 1000,
+    retryMessage: (attempt) => `Retrying to load posts... (attempt ${attempt})`,
+    maxAttemptsMessage: 'Unable to load posts after multiple attempts. Please try again later.',
+    onRetry: (attempt, error) => {
+      console.warn(`Retry attempt ${attempt} for posts:`, error);
+    },
+    onMaxAttemptsReached: (error) => {
+      console.error('Max retry attempts reached for posts:', error);
+    }
+  });
+
   useEffect(() => {
-    const fetchData = async () => {
+    const loadData = async () => {
       try {
         setLoading(true);
         setError(null);
-        
-        // Fetch categories and tags for filters
-        const [categoriesData, tagsData] = await Promise.all([
-          wordpressAPI.getCategories({ hide_empty: true }),
-          wordpressAPI.getTags({ hide_empty: true })
-        ]);
-        
-        setCategories(categoriesData);
-        setTags(tagsData);
-
-        // Build query parameters for posts
-        const queryParams: any = {
-          page: currentPage,
-          per_page: 10,
-          _embed: true
-        };
-
-        // Add category filter if selected
-        if (currentCategory) {
-          const category = categoriesData.find(cat => cat.slug === currentCategory);
-          if (category) {
-            queryParams.categories = [category.id];
-          }
-        }
-
-        // Add tag filter if selected
-        if (currentTag) {
-          const tag = tagsData.find(t => t.slug === currentTag);
-          if (tag) {
-            queryParams.tags = [tag.id];
-          }
-        }
-
-        // Add search query if provided
-        if (searchQuery) {
-          queryParams.search = searchQuery;
-        }
-
-        const response: PostsResponse = await wordpressAPI.getPosts(queryParams);
-
-        setPosts(response.posts);
-        setPagination({
-          currentPage: response.currentPage,
-          totalPages: response.totalPages,
-          totalPosts: response.totalPosts
-        });
+        await retryLogic.execute();
       } catch (err) {
         console.error('Error loading posts:', err);
         setError(err instanceof Error ? err.message : 'Failed to load posts');
@@ -83,8 +105,22 @@ const PostListPage: React.FC = () => {
       }
     };
 
-    fetchData();
+    loadData();
   }, [searchParams, currentPage, currentCategory, currentTag, searchQuery]);
+
+  // Manual retry function
+  const handleRetry = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      await retryLogic.retry();
+    } catch (err) {
+      console.error('Error retrying posts:', err);
+      setError(err instanceof Error ? err.message : 'Failed to load posts');
+    } finally {
+      setLoading(false);
+    }
+  }, [retryLogic]);
 
   // Handle filter changes
   const handleCategoryChange = (categorySlug: string) => {
@@ -177,11 +213,36 @@ const PostListPage: React.FC = () => {
     return description;
   };
 
+  // Generate canonical URL for the current page
+  const getCanonicalUrl = () => {
+    const baseUrl = `${window.location.origin}/posts`;
+    const params = new URLSearchParams();
+    
+    if (currentCategory) params.set('category', currentCategory);
+    if (currentTag) params.set('tag', currentTag);
+    if (searchQuery) params.set('search', searchQuery);
+    if (currentPage > 1) params.set('page', currentPage.toString());
+    
+    const queryString = params.toString();
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+  };
+
   return (
-    <BlogLayout
-      title={getPageTitle()}
-      description={getPageDescription()}
-    >
+    <>
+      {/* SEO Component for Blog List */}
+      <SEO
+        title={getPageTitle()}
+        description={getPageDescription()}
+        canonical={getCanonicalUrl()}
+        type="website"
+        keywords="CFO services, financial consulting, business finance, financial strategy, cash flow management"
+      />
+      
+      <BlogLayout
+        title={getPageTitle()}
+        description={getPageDescription()}
+        canonical={getCanonicalUrl()}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-12">
@@ -292,7 +353,11 @@ const PostListPage: React.FC = () => {
         <PostList 
           posts={posts} 
           loading={loading} 
-          error={error} 
+          error={error}
+          onRetry={handleRetry}
+          isRetrying={retryLogic.state.isRetrying}
+          retryCount={retryLogic.state.attemptCount}
+          maxRetries={3}
         />
 
         {/* Pagination */}
@@ -349,6 +414,7 @@ const PostListPage: React.FC = () => {
         )}
       </div>
     </BlogLayout>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../Header';
 import Footer from '../Footer';
 import SEO from './SEO';
+import BlogErrorBoundary from './BlogErrorBoundary';
 import { ChevronRight, Home } from 'lucide-react';
 
 interface BlogLayoutProps {
@@ -208,15 +209,80 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({
             /* Mobile responsive adjustments */
             @media (max-width: 768px) {
               .blog-content h1 {
-                font-size: 2rem;
+                font-size: 1.875rem;
+                line-height: 1.3;
+                margin-bottom: 1rem;
               }
               
               .blog-content h2 {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
+                line-height: 1.3;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
               }
               
               .blog-content h3 {
                 font-size: 1.25rem;
+                line-height: 1.3;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+              }
+              
+              .blog-content p {
+                font-size: 1rem;
+                line-height: 1.7;
+                margin-bottom: 1rem;
+              }
+              
+              .blog-content blockquote {
+                padding-left: 1rem;
+                margin: 1.5rem 0;
+                font-size: 0.95rem;
+              }
+              
+              .blog-content ul, .blog-content ol {
+                padding-left: 1.25rem;
+                margin-bottom: 1rem;
+              }
+              
+              .blog-content li {
+                margin-bottom: 0.375rem;
+                line-height: 1.6;
+              }
+              
+              .blog-content img {
+                margin: 1.5rem 0;
+                border-radius: 0.375rem;
+              }
+              
+              .blog-content pre {
+                padding: 0.75rem;
+                margin: 1rem 0;
+                font-size: 0.875rem;
+              }
+              
+              .blog-content code {
+                padding: 0.125rem 0.375rem;
+                font-size: 0.8125rem;
+              }
+            }
+            
+            /* Extra small screens */
+            @media (max-width: 480px) {
+              .blog-content h1 {
+                font-size: 1.625rem;
+              }
+              
+              .blog-content h2 {
+                font-size: 1.375rem;
+              }
+              
+              .blog-content h3 {
+                font-size: 1.125rem;
+              }
+              
+              .blog-content p {
+                font-size: 0.9375rem;
               }
             }
           `}
@@ -233,29 +299,29 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({
             className="bg-gray-50 border-b border-gray-200" 
             aria-label="Breadcrumb"
           >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-              <ol className="flex items-center space-x-2 text-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
+              <ol className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm overflow-x-auto">
                 {finalBreadcrumbs.map((crumb, index) => (
-                  <li key={index} className="flex items-center">
+                  <li key={index} className="flex items-center flex-shrink-0">
                     {index === 0 && (
-                      <Home className="h-4 w-4 mr-1 text-gray-400" />
+                      <Home className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-gray-400" />
                     )}
                     
                     {crumb.href ? (
                       <Link
                         to={crumb.href}
-                        className="text-gray-600 hover:text-gray-900 transition-colors duration-200 font-medium"
+                        className="text-gray-600 hover:text-gray-900 focus:text-gray-900 transition-colors duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-md px-1 py-0.5 -mx-1 -my-0.5 whitespace-nowrap"
                       >
                         {crumb.label}
                       </Link>
                     ) : (
-                      <span className="text-gray-900 font-medium">
+                      <span className="text-gray-900 font-medium whitespace-nowrap">
                         {crumb.label}
                       </span>
                     )}
                     
                     {index < finalBreadcrumbs.length - 1 && (
-                      <ChevronRight className="h-4 w-4 mx-2 text-gray-400" />
+                      <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 mx-1 sm:mx-2 text-gray-400 flex-shrink-0" />
                     )}
                   </li>
                 ))}
@@ -266,7 +332,9 @@ const BlogLayout: React.FC<BlogLayoutProps> = ({
 
         {/* Main Content */}
         <main className={`flex-1 blog-content blog-fade-in ${className}`}>
-          {children}
+          <BlogErrorBoundary>
+            {children}
+          </BlogErrorBoundary>
         </main>
 
         {/* Footer */}

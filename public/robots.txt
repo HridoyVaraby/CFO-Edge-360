@@ -1,4 +1,19 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.cfoedge360.com/sitemap.xml
+# Block indexing of WordPress CMS backend
+Disallow: https://cms.cfoedge360.com/
+
+# Allow indexing of frontend blog pages
+Allow: /posts
+Allow: /post/
+Allow: /category/
+Allow: /tag/
+
+# Block common WordPress paths that might leak through
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/
+Disallow: /wp-json/
+
+Sitemap: https://cfoedge360.com/sitemap.xml

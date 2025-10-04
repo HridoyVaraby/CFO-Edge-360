@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import PostDetail from '../../components/blog/PostDetail';
@@ -6,6 +6,7 @@ import BlogLayout from '../../components/blog/BlogLayout';
 import SEO from '../../components/blog/SEO';
 import { Post } from '../../types/wordpress';
 import { wordpressAPI } from '../../services/wordpress';
+import { useRetryWithMessages } from '../../hooks/useRetry';
 
 const PostDetailPage: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
@@ -13,8 +14,33 @@ const PostDetailPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { slug } = useParams<{ slug: string }>();
 
+  // Create fetch function for retry hook
+  const fetchPost = useCallback(async () => {
+    if (!slug) {
+      throw new Error('Post slug is required');
+    }
+
+    const fetchedPost = await wordpressAPI.getPostBySlug(slug);
+    setPost(fetchedPost);
+    return fetchedPost;
+  }, [slug]);
+
+  // Set up retry hook
+  const retryLogic = useRetryWithMessages(fetchPost, {
+    maxAttempts: 3,
+    initialDelay: 1000,
+    retryMessage: (attempt) => `Retrying to load post... (attempt ${attempt})`,
+    maxAttemptsMessage: 'Unable to load post after multiple attempts. Please try again later.',
+    onRetry: (attempt, error) => {
+      console.warn(`Retry attempt ${attempt} for post ${slug}:`, error);
+    },
+    onMaxAttemptsReached: (error) => {
+      console.error(`Max retry attempts reached for post ${slug}:`, error);
+    }
+  });
+
   useEffect(() => {
-    const fetchPost = async () => {
+    const loadPost = async () => {
       if (!slug) {
         setError('Post slug is required');
         setLoading(false);
@@ -24,9 +50,7 @@ const PostDetailPage: React.FC = () => {
       try {
         setLoading(true);
         setError(null);
-        
-        const fetchedPost = await wordpressAPI.getPostBySlug(slug);
-        setPost(fetchedPost);
+        await retryLogic.execute();
       } catch (err) {
         console.error('Error loading post:', err);
         if (err instanceof Error && err.message.includes('not found')) {
@@ -39,8 +63,26 @@ const PostDetailPage: React.FC = () => {
       }
     };
 
-    fetchPost();
-  }, [slug]);
+    loadPost();
+  }, [slug, retryLogic]);
+
+  // Manual retry function
+  const handleRetry = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      await retryLogic.retry();
+    } catch (err) {
+      console.error('Error retrying post:', err);
+      if (err instanceof Error && err.message.includes('not found')) {
+        setError('Post not found');
+      } else {
+        setError(err instanceof Error ? err.message : 'Failed to load post');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [retryLogic]);
 
   // Helper functions for SEO data
   const getPostTitle = () => {
@@ -63,10 +105,7 @@ const PostDetailPage: React.FC = () => {
     return post._embedded['wp:featuredmedia'][0].source_url;
   };
 
-  const getPostAuthor = () => {
-    if (!post?._embedded?.author?.[0]) return 'CFO Edge 360';
-    return post._embedded.author[0].name;
-  };
+
 
   const getCanonicalUrl = () => {
     return `${window.location.origin}/post/${slug}`;
@@ -82,39 +121,7 @@ const PostDetailPage: React.FC = () => {
     return new Date(post.modified).toISOString();
   };
 
-  // Generate JSON-LD structured data
-  const getStructuredData = () => {
-    if (!post) return null;
 
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": post.title.rendered,
-      "description": getPostDescription(),
-      "image": getPostImage(),
-      "author": {
-        "@type": "Person",
-        "name": getPostAuthor()
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "CFO Edge 360",
-        "logo": {
-          "@type": "ImageObject",
-          "url": `${window.location.origin}/logo.png`
-        }
-      },
-      "datePublished": getPublishedDate(),
-      "dateModified": getModifiedDate(),
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": getCanonicalUrl()
-      },
-      "url": getCanonicalUrl()
-    };
-
-    return JSON.stringify(structuredData);
-  };
 
   // Generate custom breadcrumbs for post detail page
   const getBreadcrumbs = () => {
@@ -202,11 +209,16 @@ const PostDetailPage: React.FC = () => {
           <PostDetail 
             post={post} 
             loading={loading} 
-            error={error} 
+            error={error}
+            onRetry={handleRetry}
+            isRetrying={retryLogic.state.isRetrying}
+            retryCount={retryLogic.state.attemptCount}
+            maxRetries={3}
           />
         )}
       </div>
     </BlogLayout>
+    </>
   );
 };
 

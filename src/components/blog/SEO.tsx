@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Post, Author, Media } from '../../types/wordpress';
+import { Post, Author } from '../../types/wordpress';
+import { SEO_CONFIG, seoUtils } from '../../config/seo';
 
 interface SEOProps {
   // Basic meta data
@@ -31,6 +32,9 @@ interface SEOProps {
   robots?: string;
   keywords?: string;
   
+  // CMS blocking
+  blockCMSIndexing?: boolean;
+  
   // JSON-LD structured data
   structuredData?: object;
 }
@@ -42,7 +46,7 @@ const SEO: React.FC<SEOProps> = ({
   type = 'website',
   image,
   imageAlt,
-  siteName = 'CFO Edge 360',
+  siteName = SEO_CONFIG.siteName,
   post,
   author,
   publishedTime,
@@ -52,14 +56,15 @@ const SEO: React.FC<SEOProps> = ({
   twitterCard = 'summary_large_image',
   twitterSite,
   twitterCreator,
-  robots = 'index, follow',
+  robots,
   keywords,
-  structuredData
+  structuredData,
+  blockCMSIndexing = true
 }) => {
   // Generate canonical URL
   const getCanonicalUrl = (): string => {
     if (canonical) return canonical;
-    return window.location.href;
+    return seoUtils.getCanonicalUrl();
   };
 
   // Generate default image
@@ -68,7 +73,7 @@ const SEO: React.FC<SEOProps> = ({
     if (post?._embedded?.['wp:featuredmedia']?.[0]) {
       return post._embedded['wp:featuredmedia'][0].source_url;
     }
-    return `${window.location.origin}/logo.png`;
+    return `${SEO_CONFIG.siteUrl}${SEO_CONFIG.images.defaultOgImage}`;
   };
 
   // Generate image alt text
@@ -86,7 +91,7 @@ const SEO: React.FC<SEOProps> = ({
     if (post?._embedded?.author?.[0]) {
       return post._embedded.author[0].name;
     }
-    return 'CFO Edge 360';
+    return SEO_CONFIG.siteName;
   };
 
   // Generate article tags from post
@@ -123,7 +128,7 @@ const SEO: React.FC<SEOProps> = ({
         "name": siteName,
         "logo": {
           "@type": "ImageObject",
-          "url": `${window.location.origin}/logo.png`,
+          "url": `${SEO_CONFIG.siteUrl}${SEO_CONFIG.images.logoUrl}`,
           "alt": `${siteName} Logo`
         }
       },
@@ -144,19 +149,8 @@ const SEO: React.FC<SEOProps> = ({
   // Generate JSON-LD structured data for website/organization
   const generateWebsiteStructuredData = (): object => {
     return {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": siteName,
-      "url": window.location.origin,
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${window.location.origin}/logo.png`,
-        "alt": `${siteName} Logo`
-      },
-      "description": "Expert financial consulting and CFO services to help businesses optimize their financial performance and strategic planning.",
-      "sameAs": [
-        // Add social media URLs here if available
-      ]
+      ...SEO_CONFIG.structuredData.organization,
+      "url": SEO_CONFIG.siteUrl
     };
   };
 
@@ -164,14 +158,28 @@ const SEO: React.FC<SEOProps> = ({
     ? generateBlogPostStructuredData() 
     : generateWebsiteStructuredData();
 
+  // Generate robots meta tag with CMS blocking
+  const getRobotsContent = (): string => {
+    return seoUtils.getRobotsContent(robots);
+  };
+
   return (
     <Helmet>
       {/* Basic Meta Tags */}
       <title>{title}</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
-      <meta name="robots" content={robots} />
-      <meta name="googlebot" content={robots} />
+      <meta name="robots" content={getRobotsContent()} />
+      <meta name="googlebot" content={getRobotsContent()} />
+      
+      {/* Additional CMS blocking meta tags */}
+      {blockCMSIndexing && seoUtils.isCMSDomain() && (
+        <>
+          <meta name="bingbot" content="noindex, nofollow" />
+          <meta name="slurp" content="noindex, nofollow" />
+          <meta name="duckduckbot" content="noindex, nofollow" />
+        </>
+      )}
       
       {/* Canonical URL */}
       <link rel="canonical" href={getCanonicalUrl()} />

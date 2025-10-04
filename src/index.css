@@ -59,6 +59,20 @@
   animation: float-delayed 3s ease-in-out infinite 1.5s;
 }
 
+/* Shimmer animation for skeleton loaders */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
 /* Line clamp utilities for text truncation */
 .line-clamp-2 {
   display: -webkit-box;
@@ -72,4 +86,41 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Mobile touch optimizations */
+@media (max-width: 640px) {
+  /* Improve touch targets on mobile */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-float,
+    .animate-float-delayed {
+      animation: none;
+    }
+    
+    .transition-all,
+    .transition-colors,
+    .transition-transform,
+    .transition-opacity {
+      transition: none;
+    }
+  }
+  
+  /* Improve text readability on small screens */
+  .blog-content {
+    line-height: 1.7;
+  }
+  
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3 {
+    line-height: 1.3;
+  }
 }

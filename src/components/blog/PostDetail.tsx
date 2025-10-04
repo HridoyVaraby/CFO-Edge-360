@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, User, ArrowLeft, Clock, Tag, Folder, AlertCircle } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Clock, Tag, Folder } from 'lucide-react';
 import { Post } from '../../types/wordpress';
+import { PostDetailSkeleton } from './SkeletonLoaders';
+import ErrorDisplay from './ErrorDisplay';
+import LazyImage from './LazyImage';
 
 interface PostDetailProps {
   post: Post | null;
@@ -9,86 +12,33 @@ interface PostDetailProps {
   error: string | null;
   onRetry?: () => void;
   className?: string;
+  isRetrying?: boolean;
+  retryCount?: number;
+  maxRetries?: number;
 }
 
-// Loading skeleton for post detail
-const PostDetailSkeleton: React.FC = () => (
-  <article className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
-    {/* Featured image skeleton */}
-    <div className="w-full h-64 sm:h-80 lg:h-96 bg-gray-200"></div>
-    
-    {/* Content skeleton */}
-    <div className="p-6 sm:p-8 lg:p-12">
-      {/* Breadcrumb skeleton */}
-      <div className="h-4 bg-gray-200 rounded w-32 mb-6"></div>
-      
-      {/* Title skeleton */}
-      <div className="mb-6">
-        <div className="h-8 bg-gray-200 rounded mb-3"></div>
-        <div className="h-8 bg-gray-200 rounded w-3/4"></div>
-      </div>
-      
-      {/* Meta skeleton */}
-      <div className="flex flex-wrap gap-4 mb-8">
-        <div className="h-4 bg-gray-200 rounded w-24"></div>
-        <div className="h-4 bg-gray-200 rounded w-32"></div>
-        <div className="h-4 bg-gray-200 rounded w-20"></div>
-      </div>
-      
-      {/* Content skeleton */}
-      <div className="space-y-4">
-        {Array.from({ length: 8 }).map((_, index) => (
-          <div key={index} className="h-4 bg-gray-200 rounded"></div>
-        ))}
-      </div>
-    </div>
-  </article>
-);
 
-// Error display component
-const ErrorDisplay: React.FC<{ error: string; onRetry?: () => void }> = ({ error, onRetry }) => (
-  <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg border border-red-200 p-8 text-center animate-fade-in">
-    <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-    <h2 className="text-2xl font-bold font-serif text-gray-900 mb-2">Unable to Load Post</h2>
-    <p className="text-gray-600 mb-6">{error}</p>
-    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-      {onRetry && (
-        <button
-          onClick={onRetry}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-blue-900 text-white font-semibold rounded-xl hover:bg-amber-600 transition-colors duration-200"
-        >
-          Try Again
-        </button>
-      )}
-      <Link
-        to="/posts"
-        className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-colors duration-200"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to Posts
-      </Link>
-    </div>
-  </div>
-);
+
+
 
 // Breadcrumb component
 const Breadcrumb: React.FC<{ postTitle: string }> = ({ postTitle }) => (
-  <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
+  <nav className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 overflow-x-auto" aria-label="Breadcrumb">
     <Link 
       to="/" 
-      className="hover:text-amber-600 transition-colors duration-200"
+      className="hover:text-amber-600 focus:text-amber-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-md px-1 py-0.5 -mx-1 -my-0.5 whitespace-nowrap"
     >
       Home
     </Link>
-    <span>/</span>
+    <span className="text-gray-400">/</span>
     <Link 
       to="/posts" 
-      className="hover:text-amber-600 transition-colors duration-200"
+      className="hover:text-amber-600 focus:text-amber-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-md px-1 py-0.5 -mx-1 -my-0.5 whitespace-nowrap"
     >
       Blog
     </Link>
-    <span>/</span>
-    <span className="text-gray-700 truncate max-w-xs" title={postTitle}>
+    <span className="text-gray-400">/</span>
+    <span className="text-gray-700 truncate max-w-[120px] sm:max-w-xs" title={postTitle}>
       {postTitle}
     </span>
   </nav>
@@ -96,10 +46,11 @@ const Breadcrumb: React.FC<{ postTitle: string }> = ({ postTitle }) => (
 
 // Back to posts button
 const BackButton: React.FC = () => (
-  <div className="mb-8">
+  <div className="mb-6 sm:mb-8">
     <Link
       to="/posts"
-      className="inline-flex items-center gap-2 text-blue-900 hover:text-amber-600 font-semibold transition-colors duration-200 group"
+      className="inline-flex items-center gap-2 text-blue-900 hover:text-amber-600 focus:text-amber-600 font-semibold transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-md py-2 px-3 -mx-3 -my-2 min-h-[44px] sm:min-h-[auto] sm:py-0 sm:px-0"
+      aria-label="Go back to blog posts"
     >
       <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform duration-200" />
       Back to Posts
@@ -112,15 +63,14 @@ const PostDetail: React.FC<PostDetailProps> = ({
   loading,
   error,
   onRetry,
-  className = ''
+  className = '',
+  isRetrying = false,
+  retryCount = 0,
+  maxRetries = 3
 }) => {
   // Show loading state
   if (loading) {
-    return (
-      <div className={`py-8 px-4 sm:px-6 lg:px-8 ${className}`}>
-        <PostDetailSkeleton />
-      </div>
-    );
+    return <PostDetailSkeleton className={className} />;
   }
 
   // Show error state
@@ -129,7 +79,14 @@ const PostDetail: React.FC<PostDetailProps> = ({
       <div className={`py-8 px-4 sm:px-6 lg:px-8 ${className}`}>
         <ErrorDisplay 
           error={error || 'Post not found'} 
-          onRetry={onRetry} 
+          onRetry={onRetry}
+          isRetrying={isRetrying}
+          retryCount={retryCount}
+          maxRetries={maxRetries}
+          showBackButton={true}
+          showHomeButton={true}
+          size="large"
+          variant="card"
         />
       </div>
     );
@@ -161,7 +118,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
   const readingTime = estimateReadingTime(post.content.rendered);
 
   return (
-    <div className={`py-8 px-4 sm:px-6 lg:px-8 ${className}`}>
+    <div className={`py-4 sm:py-8 px-4 sm:px-6 lg:px-8 ${className}`}>
       <div className="max-w-4xl mx-auto">
         <BackButton />
         
@@ -169,10 +126,12 @@ const PostDetail: React.FC<PostDetailProps> = ({
           {/* Featured Image */}
           {featuredMedia?.source_url && (
             <div className="relative">
-              <img
+              <LazyImage
                 src={featuredMedia.source_url}
                 alt={featuredMedia.alt_text || post.title.rendered}
-                className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+                className="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover"
+                sizes="100vw"
+                priority={true}
               />
               {/* Overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
@@ -180,29 +139,29 @@ const PostDetail: React.FC<PostDetailProps> = ({
           )}
 
           {/* Content */}
-          <div className="p-6 sm:p-8 lg:p-12">
+          <div className="p-4 sm:p-6 md:p-8 lg:p-12">
             {/* Breadcrumb */}
             <Breadcrumb postTitle={post.title.rendered.replace(/<[^>]*>/g, '')} />
 
             {/* Title */}
             <h1 
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif text-black leading-tight mb-6"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-black leading-tight mb-4 sm:mb-6 blog-content"
               dangerouslySetInnerHTML={{ __html: post.title.rendered }}
             />
 
             {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm text-gray-600 mb-8 pb-6 border-b border-gray-200">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-gray-200">
               {/* Author */}
               {author && (
                 <div className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
+                  <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                   <span className="font-medium">{author.name}</span>
                 </div>
               )}
 
               {/* Date */}
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
+                <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                 <time dateTime={post.date}>
                   {formatDate(post.date)}
                 </time>
@@ -210,23 +169,23 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
               {/* Reading time */}
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
+                <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                 <span>{readingTime} min read</span>
               </div>
             </div>
 
             {/* Categories and Tags */}
             {(categories.length > 0 || tags.length > 0) && (
-              <div className="flex flex-wrap gap-4 mb-8">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mb-6 sm:mb-8">
                 {/* Categories */}
                 {categories.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <Folder className="h-4 w-4 text-gray-500" />
-                    <div className="flex flex-wrap gap-2">
+                  <div className="flex items-start sm:items-center gap-2">
+                    <Folder className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-gray-500 flex-shrink-0 mt-0.5 sm:mt-0" />
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {categories.map((category: any) => (
                         <span
                           key={category.id}
-                          className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                          className="px-2.5 sm:px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
                         >
                           {category.name}
                         </span>
@@ -237,13 +196,13 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
                 {/* Tags */}
                 {tags.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <Tag className="h-4 w-4 text-gray-500" />
-                    <div className="flex flex-wrap gap-2">
+                  <div className="flex items-start sm:items-center gap-2">
+                    <Tag className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-gray-500 flex-shrink-0 mt-0.5 sm:mt-0" />
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {tags.map((tag: any) => (
                         <span
                           key={tag.id}
-                          className="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full"
+                          className="px-2.5 sm:px-3 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full"
                         >
                           {tag.name}
                         </span>
@@ -256,27 +215,38 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
             {/* Post Content */}
             <div 
-              className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-black prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-900 prose-a:no-underline hover:prose-a:text-amber-600 prose-strong:text-black prose-blockquote:border-l-amber-500 prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-img:rounded-lg prose-img:shadow-md"
+              className="prose prose-sm sm:prose-base lg:prose-lg max-w-none blog-content
+                prose-headings:font-serif prose-headings:text-black prose-headings:leading-tight
+                prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base sm:prose-p:text-lg
+                prose-a:text-blue-900 prose-a:no-underline hover:prose-a:text-amber-600 focus:prose-a:text-amber-600
+                prose-strong:text-black prose-strong:font-semibold
+                prose-blockquote:border-l-amber-500 prose-blockquote:bg-gray-50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-blockquote:my-4
+                prose-img:rounded-lg prose-img:shadow-md prose-img:w-full prose-img:h-auto
+                prose-ul:my-4 prose-ol:my-4 prose-li:my-1
+                prose-h1:text-2xl sm:prose-h1:text-3xl lg:prose-h1:text-4xl prose-h1:mb-4 prose-h1:mt-8
+                prose-h2:text-xl sm:prose-h2:text-2xl lg:prose-h2:text-3xl prose-h2:mb-3 prose-h2:mt-6
+                prose-h3:text-lg sm:prose-h3:text-xl lg:prose-h3:text-2xl prose-h3:mb-2 prose-h3:mt-5"
               dangerouslySetInnerHTML={{ __html: post.content.rendered }}
             />
 
             {/* Post Footer */}
-            <div className="mt-12 pt-8 border-t border-gray-200">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-200">
+              <div className="flex flex-col gap-4 sm:gap-6">
                 {/* Author info */}
                 {author && (
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-start sm:items-center gap-3">
                     {author.avatar_urls?.['48'] && (
-                      <img
+                      <LazyImage
                         src={author.avatar_urls['48']}
                         alt={author.name}
-                        className="w-12 h-12 rounded-full"
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex-shrink-0"
+                        sizes="48px"
                       />
                     )}
-                    <div>
-                      <p className="font-semibold text-gray-900">{author.name}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-gray-900 text-sm sm:text-base">{author.name}</p>
                       {author.description && (
-                        <p className="text-sm text-gray-600 line-clamp-2">
+                        <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 mt-1">
                           {author.description.replace(/<[^>]*>/g, '')}
                         </p>
                       )}
@@ -287,7 +257,8 @@ const PostDetail: React.FC<PostDetailProps> = ({
                 {/* Back to posts link */}
                 <Link
                   to="/posts"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-900 text-white font-semibold rounded-xl hover:bg-amber-600 transition-colors duration-200 self-start sm:self-auto"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-blue-900 text-white font-semibold rounded-xl hover:bg-amber-600 focus:bg-amber-600 transition-colors duration-200 w-full sm:w-auto sm:self-start min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                  aria-label="View more blog posts"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   More Posts
