@@ -151,6 +151,7 @@ export interface PostQueryParams {
   status?: 'publish' | 'draft' | 'private';
   orderby?: 'date' | 'id' | 'include' | 'title' | 'slug';
   order?: 'asc' | 'desc';
+  exclude?: number[];
   _embed?: boolean;
 }
 

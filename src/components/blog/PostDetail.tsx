@@ -62,7 +62,6 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   // State for related posts
   const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
-  const [loadingRelated, setLoadingRelated] = useState(false);
 
   // Extract embedded data
   const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
@@ -93,7 +92,6 @@ const PostDetail: React.FC<PostDetailProps> = ({
       if (!post || categories.length === 0) return;
 
       try {
-        setLoadingRelated(true);
         const categoryIds = categories.map((cat: any) => cat.id);
 
         const response = await wordpressAPI.getPosts({
@@ -106,8 +104,6 @@ const PostDetail: React.FC<PostDetailProps> = ({
         setRelatedPosts(response.posts);
       } catch (err) {
         console.error('Error fetching related posts:', err);
-      } finally {
-        setLoadingRelated(false);
       }
     };
 
