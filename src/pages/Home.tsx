@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import CompanyOverview from '../components/CompanyOverview';
@@ -10,11 +10,55 @@ import {
   BarChart3,
   Handshake,
   Settings,
-  ArrowRight
+  ArrowRight,
+  ChevronDown
 } from 'lucide-react';
 import CTASection from '../components/CTASection';
 
 const Home = () => {
+  const [openFaq, setOpenFaq] = useState(0); // First FAQ open by default
+
+  const faqData = [
+    {
+      question: "What is a Virtual CFO and how does it differ from a traditional CFO?",
+      answer: "A Virtual CFO provides the same strategic financial expertise as a traditional CFO but on a flexible, part-time basis. This allows growing businesses to access C-level financial guidance without the full-time executive cost, making it perfect for companies that need expert financial leadership but aren't ready for a full-time hire."
+    },
+    {
+      question: "What size businesses do you typically work with?",
+      answer: "We work with businesses ranging from startups to mid-market companies, typically with revenues between $1M to $50M. Our services are particularly valuable for companies in growth phases, those preparing for fundraising, or businesses expanding internationally that need strategic financial guidance."
+    },
+    {
+      question: "How quickly can you start working with our business?",
+      answer: "We can typically begin our engagement within 1-2 weeks of our initial consultation. This includes understanding your business needs, setting up necessary access to financial systems, and developing a customized service plan that aligns with your specific goals and timeline."
+    },
+    {
+      question: "Do you work with businesses in specific industries?",
+      answer: "We have experience across various industries including technology, healthcare, manufacturing, professional services, and e-commerce. Our expertise in financial strategy, compliance, and growth planning translates well across different sectors, allowing us to provide valuable insights regardless of your industry."
+    },
+    {
+      question: "What financial systems and software do you work with?",
+      answer: "We're proficient with all major accounting and financial systems including QuickBooks, Xero, NetSuite, Sage, and various ERP systems. We also work with financial planning tools, business intelligence platforms, and can help you select and implement the right systems for your business needs."
+    },
+    {
+      question: "How do you ensure data security and confidentiality?",
+      answer: "We maintain the highest standards of data security and confidentiality. All client information is protected through encrypted communications, secure cloud platforms, and strict confidentiality agreements. We're also experienced with compliance requirements across different industries and jurisdictions."
+    }
+  ];
+
+  // FAQ Schema for SEO
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqData.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   const services = [
     {
       icon: TrendingUp,
@@ -62,10 +106,19 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
+      {/* FAQ Schema for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema)
+        }}
+      />
+      
       {/* Hero Section */}
       <Hero />
       {/* Company Overview */}
       <CompanyOverview />
+      
       {/* Services Snapshot */}
       <section className="px-4 py-12 sm:py-16 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
         <div className="mx-auto max-w-7xl">
@@ -104,6 +157,143 @@ const Home = () => {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="px-4 py-12 sm:py-16 sm:px-6 lg:px-8 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Content */}
+            <div className="space-y-6">
+              {/* Company Logo/Brand */}
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-white shadow-lg">
+                  <TrendingUp className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">CFO EDGE360</h3>
+                  <p className="text-sm text-gray-600">Virtual CFO Services</p>
+                </div>
+              </div>
+              
+              {/* Personal Message */}
+              <div className="space-y-4">
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  I am a seasoned financial professional with extensive experience in strategic planning, 
+                  financial analysis, and business growth optimization. With a passion for precision and 
+                  a deep understanding of modern financial systems, I founded CFO EDGE360 to provide 
+                  reliable, client-focused services tailored to meet the unique needs of each business.
+                </p>
+                <p className="text-base text-gray-600 leading-relaxed">
+                  My mission is to help businesses achieve sustainable growth through strategic financial 
+                  guidance, operational excellence, and data-driven decision making. Every client partnership 
+                  is built on trust, transparency, and measurable results.
+                </p>
+              </div>
+              
+              {/* Signature Line */}
+              <div className="pt-4 border-t border-gray-200">
+                <div className="space-y-1">
+                  <h4 className="text-xl font-bold text-gray-900">John Smith</h4>
+                  <p className="text-amber-600 font-medium">Founder & CEO</p>
+                  <p className="text-sm text-gray-500">Certified Public Accountant (CPA)</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Professional Photo */}
+            <div className="lg:order-last">
+              <div className="relative">
+                {/* Main Photo Container */}
+                <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                  {/* Placeholder for professional photo */}
+                  <div className="aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <div className="text-center space-y-4">
+                      <div className="w-24 h-24 mx-auto bg-gradient-to-r from-amber-400 to-amber-500 rounded-full flex items-center justify-center">
+                        <TrendingUp className="w-12 h-12 text-white" />
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-gray-600 font-medium">Professional Photo</p>
+                        <p className="text-sm text-gray-500">Coming Soon</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Overlay Elements */}
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-xs font-medium text-gray-700">Available for Consultation</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-amber-100 rounded-full opacity-60"></div>
+                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-r from-amber-50 to-orange-50 rounded-full opacity-80"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="px-4 py-12 sm:py-16 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white font-serif mb-3 sm:mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto">
+              Get answers to common questions about our virtual CFO services and how we can help your business grow.
+            </p>
+          </div>
+          
+          <div className="space-y-4">
+            {faqData.map((faq, index) => {
+              const isOpen = openFaq === index;
+              return (
+                <div key={index} className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                    className="w-full px-6 py-6 sm:px-8 sm:py-6 text-left flex items-center justify-between hover:bg-gray-750 transition-colors duration-200 min-h-[44px]"
+                  >
+                    <h3 className="text-lg sm:text-xl font-semibold text-white leading-tight pr-4">
+                      {faq.question}
+                    </h3>
+                    <ChevronDown 
+                      className={`h-5 w-5 text-amber-400 transition-transform duration-200 flex-shrink-0 ${
+                        isOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ${
+                    isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="px-6 pb-6 sm:px-8 sm:pb-8">
+                      <p className="text-gray-300 leading-relaxed text-sm sm:text-base">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          <div className="text-center mt-10 sm:mt-12">
+            <p className="text-gray-300 mb-6">
+              Have more questions? We'd love to discuss your specific needs.
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-amber-500 text-white font-semibold rounded-xl hover:bg-amber-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-h-[44px] text-sm sm:text-base"
+            >
+              Get Your Questions Answered
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+            </Link>
           </div>
         </div>
       </section>
