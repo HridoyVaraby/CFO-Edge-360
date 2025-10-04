@@ -6,38 +6,13 @@ import BlogLayout from '../../components/blog/BlogLayout';
 import SEO from '../../components/blog/SEO';
 import { Post } from '../../types/wordpress';
 import { wordpressAPI } from '../../services/wordpress';
-import { useRetryWithMessages } from '../../hooks/useRetry';
+
 
 const PostDetailPage: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { slug } = useParams<{ slug: string }>();
-
-  // Create fetch function for retry hook
-  const fetchPost = useCallback(async () => {
-    if (!slug) {
-      throw new Error('Post slug is required');
-    }
-
-    const fetchedPost = await wordpressAPI.getPostBySlug(slug);
-    setPost(fetchedPost);
-    return fetchedPost;
-  }, [slug]);
-
-  // Set up retry hook
-  const retryLogic = useRetryWithMessages(fetchPost, {
-    maxAttempts: 3,
-    initialDelay: 1000,
-    retryMessage: (attempt) => `Retrying to load post... (attempt ${attempt})`,
-    maxAttemptsMessage: 'Unable to load post after multiple attempts. Please try again later.',
-    onRetry: (attempt, error) => {
-      console.warn(`Retry attempt ${attempt} for post ${slug}:`, error);
-    },
-    onMaxAttemptsReached: (error) => {
-      console.error(`Max retry attempts reached for post ${slug}:`, error);
-    }
-  });
 
   useEffect(() => {
     const loadPost = async () => {
@@ -50,7 +25,8 @@ const PostDetailPage: React.FC = () => {
       try {
         setLoading(true);
         setError(null);
-        await retryLogic.execute();
+        const fetchedPost = await wordpressAPI.getPostBySlug(slug);
+        setPost(fetchedPost);
       } catch (err) {
         console.error('Error loading post:', err);
         if (err instanceof Error && err.message.includes('not found')) {
@@ -64,14 +40,17 @@ const PostDetailPage: React.FC = () => {
     };
 
     loadPost();
-  }, [slug, retryLogic]);
+  }, [slug]);
 
   // Manual retry function
   const handleRetry = useCallback(async () => {
+    if (!slug) return;
+    
     try {
       setLoading(true);
       setError(null);
-      await retryLogic.retry();
+      const fetchedPost = await wordpressAPI.getPostBySlug(slug);
+      setPost(fetchedPost);
     } catch (err) {
       console.error('Error retrying post:', err);
       if (err instanceof Error && err.message.includes('not found')) {
@@ -82,7 +61,7 @@ const PostDetailPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [retryLogic]);
+  }, [slug]);
 
   // Helper functions for SEO data
   const getPostTitle = () => {
@@ -211,8 +190,8 @@ const PostDetailPage: React.FC = () => {
             loading={loading} 
             error={error}
             onRetry={handleRetry}
-            isRetrying={retryLogic.state.isRetrying}
-            retryCount={retryLogic.state.attemptCount}
+            isRetrying={false}
+            retryCount={0}
             maxRetries={3}
           />
         )}
