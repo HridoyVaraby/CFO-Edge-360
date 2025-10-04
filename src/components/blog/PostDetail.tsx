@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, User, ArrowLeft, Clock, Tag, Folder } from 'lucide-react';
+import { Calendar, Clock, Folder, ArrowRight } from 'lucide-react';
 import { Post } from '../../types/wordpress';
 import { PostDetailSkeleton } from './SkeletonLoaders';
 import ErrorDisplay from './ErrorDisplay';
 import LazyImage from './LazyImage';
+import { wordpressAPI } from '../../services/wordpress';
 
 interface PostDetailProps {
   post: Post | null;
@@ -23,19 +24,7 @@ interface PostDetailProps {
 
 
 
-// Modern back button
-const BackButton: React.FC = () => (
-  <div className="mb-8">
-    <Link
-      to="/posts"
-      className="inline-flex items-center gap-3 px-6 py-3 bg-white hover:bg-gray-50 border border-gray-200 rounded-xl font-semibold text-gray-700 hover:text-gray-900 transition-all duration-200 group shadow-sm hover:shadow-md transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-      aria-label="Go back to blog posts"
-    >
-      <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-200" />
-      Back to Articles
-    </Link>
-  </div>
-);
+
 
 const PostDetail: React.FC<PostDetailProps> = ({
   post,
@@ -71,11 +60,13 @@ const PostDetail: React.FC<PostDetailProps> = ({
     );
   }
 
+  // State for related posts
+  const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
+  const [loadingRelated, setLoadingRelated] = useState(false);
+
   // Extract embedded data
-  const author = post._embedded?.author?.[0];
   const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
   const categories = post._embedded?.['wp:term']?.[0] || [];
-  const tags = post._embedded?.['wp:term']?.[1] || [];
 
   // Format date
   const formatDate = (dateString: string) => {
@@ -96,11 +87,36 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
   const readingTime = estimateReadingTime(post.content.rendered);
 
+  // Fetch related posts based on categories
+  useEffect(() => {
+    const fetchRelatedPosts = async () => {
+      if (!post || categories.length === 0) return;
+
+      try {
+        setLoadingRelated(true);
+        const categoryIds = categories.map((cat: any) => cat.id);
+        
+        const response = await wordpressAPI.getPosts({
+          categories: categoryIds,
+          per_page: 3,
+          exclude: [post.id],
+          _embed: true
+        });
+
+        setRelatedPosts(response.posts);
+      } catch (err) {
+        console.error('Error fetching related posts:', err);
+      } finally {
+        setLoadingRelated(false);
+      }
+    };
+
+    fetchRelatedPosts();
+  }, [post, categories]);
+
   return (
     <div className={`bg-gradient-to-br from-slate-50 via-white to-blue-50 min-h-screen ${className}`}>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        <BackButton />
-        
+      <div>
         <article className="bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in border border-gray-100">
           {/* Featured Image */}
           {featuredMedia?.source_url && (
@@ -129,19 +145,6 @@ const PostDetail: React.FC<PostDetailProps> = ({
 
             {/* Meta Information */}
             <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 mb-8 pb-8 border-b border-gray-200">
-              {/* Author */}
-              {author && (
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-white font-bold">
-                    {author.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">{author.name}</p>
-                    <p className="text-xs text-gray-500">Author</p>
-                  </div>
-                </div>
-              )}
-
               {/* Date */}
               <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5 text-gray-400" />
@@ -163,42 +166,20 @@ const PostDetail: React.FC<PostDetailProps> = ({
               </div>
             </div>
 
-            {/* Categories and Tags */}
-            {(categories.length > 0 || tags.length > 0) && (
-              <div className="flex flex-wrap gap-6 mb-10">
-                {/* Categories */}
-                {categories.length > 0 && (
-                  <div className="flex items-center gap-3">
-                    <Folder className="h-5 w-5 text-gray-400" />
-                    <div className="flex flex-wrap gap-2">
-                      {categories.map((category: any) => (
-                        <span
-                          key={category.id}
-                          className="px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 text-sm font-semibold rounded-full"
-                        >
-                          {category.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Tags */}
-                {tags.length > 0 && (
-                  <div className="flex items-center gap-3">
-                    <Tag className="h-5 w-5 text-gray-400" />
-                    <div className="flex flex-wrap gap-2">
-                      {tags.map((tag: any) => (
-                        <span
-                          key={tag.id}
-                          className="px-4 py-2 bg-gradient-to-r from-amber-100 to-amber-200 text-amber-800 text-sm font-semibold rounded-full"
-                        >
-                          {tag.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+            {/* Categories Only */}
+            {categories.length > 0 && (
+              <div className="flex flex-wrap gap-3 mb-10">
+                <Folder className="h-5 w-5 text-gray-400 mt-1" />
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((category: any) => (
+                    <span
+                      key={category.id}
+                      className="px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 text-sm font-semibold rounded-full"
+                    >
+                      {category.name}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -220,24 +201,49 @@ const PostDetail: React.FC<PostDetailProps> = ({
               dangerouslySetInnerHTML={{ __html: post.content.rendered }}
             />
 
-            {/* Author Bio Section */}
-            {author && (
+            {/* Related Posts Section */}
+            {relatedPosts.length > 0 && (
               <div className="mt-16 pt-8 border-t border-gray-200">
-                <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8">
-                  <div className="flex items-start gap-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
-                      {author.name.charAt(0).toUpperCase()}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold font-serif text-gray-900 mb-2">About {author.name}</h3>
-                      {author.description && (
-                        <p className="text-gray-600 leading-relaxed mb-4">
-                          {author.description.replace(/<[^>]*>/g, '')}
-                        </p>
-                      )}
-                      <p className="text-sm text-gray-500">Financial Expert & Author</p>
-                    </div>
-                  </div>
+                <h2 className="text-2xl sm:text-3xl font-bold font-serif text-gray-900 mb-8">
+                  Related Articles
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {relatedPosts.map((relatedPost) => {
+                    const relatedMedia = relatedPost._embedded?.['wp:featuredmedia']?.[0];
+                    return (
+                      <Link
+                        key={relatedPost.id}
+                        to={`/post/${relatedPost.slug}`}
+                        className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 no-underline"
+                      >
+                        {relatedMedia?.source_url && (
+                          <div className="relative aspect-video overflow-hidden">
+                            <img
+                              src={relatedMedia.source_url}
+                              alt={relatedMedia.alt_text || relatedPost.title.rendered}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                        )}
+                        <div className="p-4">
+                          <h3 
+                            className="font-bold font-serif text-gray-900 group-hover:text-amber-600 transition-colors duration-200 line-clamp-2 mb-2"
+                            dangerouslySetInnerHTML={{ __html: relatedPost.title.rendered }}
+                          />
+                          <div className="flex items-center gap-2 text-xs text-gray-500">
+                            <Calendar className="h-3 w-3" />
+                            <time dateTime={relatedPost.date}>
+                              {new Date(relatedPost.date).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                              })}
+                            </time>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -249,8 +255,8 @@ const PostDetail: React.FC<PostDetailProps> = ({
                 className="inline-flex items-center gap-3 px-8 py-4 bg-amber-500 hover:bg-gray-900 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 no-underline"
                 aria-label="View more blog posts"
               >
-                <ArrowLeft className="h-5 w-5 text-white" />
                 <span className="text-white">Explore More Articles</span>
+                <ArrowRight className="h-5 w-5 text-white" />
               </Link>
             </div>
           </div>
