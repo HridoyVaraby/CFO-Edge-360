@@ -111,12 +111,12 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-3 sm:space-x-4">
-                  <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-green-400 to-green-500 text-white flex-shrink-0">
+                  <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-green-500 to-green-600 text-white flex-shrink-0">
                     <MapPin className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-semibold text-gray-900">Company Address</h3>
-                    <p className="text-sm sm:text-base text-gray-600">1209 MOUNTAIN ROAD PL NE, STE R, ALBUQUERQUE, NM 87110, USA</p>
+                    <p className="text-sm sm:text-base text-gray-600">ASTRAL PARADISE, FLAT# 5/A, H-20, R-25, EASTERN HOUSING PALLABI (SUJATNAGAR BALUR MATH) MIRPUR -12, DHAKA-1216, BANGLADESH</p>
                   </div>
                 </div>
               </div>

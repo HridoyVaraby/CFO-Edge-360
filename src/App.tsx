@@ -10,6 +10,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import CookiePolicy from './pages/CookiePolicy';
 import CancellationRefundPolicy from './pages/CancellationRefundPolicy';
 import TermsConditions from './pages/TermsConditions';
+import DeveloperCredit from './pages/DeveloperCredit';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/cancellation-refund-policy" element={<CancellationRefundPolicy />} />
             <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/developer-credit" element={<DeveloperCredit />} />
           </Routes>
         </main>
         <Footer />
