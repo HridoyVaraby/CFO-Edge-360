@@ -46,7 +46,7 @@ const Header = () => {
               to="/contact"
               className="inline-flex items-center px-6 py-3 bg-amber-500 text-white font-semibold rounded-xl hover:bg-gray-900 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
-              Book Consultation
+              Book A Consultation
             </Link>
           </div>
 
