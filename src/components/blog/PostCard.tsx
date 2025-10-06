@@ -43,21 +43,21 @@ const PostCard: React.FC<PostCardProps> = ({ post, className = '' }) => {
       className={`group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-gray-100 animate-fade-in ${className}`}
     >
       {/* Featured Image with 16:9 Aspect Ratio - No top padding */}
-      <div className="relative overflow-hidden aspect-video">
+      <div className="relative overflow-hidden aspect-video m-0 p-0">
         <Link 
           to={`/post/${post.slug}`}
-          className="block focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-t-2xl"
+          className="absolute inset-0 block focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
           aria-label={`Read full post: ${post.title.rendered.replace(/<[^>]*>/g, '')}`}
         >
           {featuredMedia?.source_url ? (
             <LazyImage
               src={featuredMedia.source_url}
               alt={featuredMedia.alt_text || post.title.rendered}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 m-0 p-0"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center m-0 p-0">
               <div className="text-slate-400">
                 <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
