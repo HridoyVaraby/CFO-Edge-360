@@ -162,25 +162,23 @@ const Home = () => {
       </section>
 
       {/* Founder Section */}
-      <section className="px-4 py-12 sm:py-16 sm:px-6 lg:px-8 bg-white">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Content */}
-            <div className="space-y-6">
-              {/* Company Logo/Brand */}
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-white shadow-lg">
-                  <TrendingUp className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900">CFO EDGE360</h3>
-                  <p className="text-sm text-gray-600">Virtual CFO Services</p>
-                </div>
+      <section className="px-4 py-12 sm:py-16 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+            {/* Content - Takes 3 columns */}
+            <div className="lg:col-span-3 space-y-6">
+              {/* Company Logo */}
+              <div className="mb-2">
+                <img
+                  src="/logo.png"
+                  alt="CFO EDGE360 - Virtual CFO Services"
+                  className="h-32 w-32 object-contain"
+                />
               </div>
 
               {/* Personal Message */}
               <div className="space-y-4">
-                <p className="text-lg text-gray-700 leading-relaxed">
+                <p className="text-base text-gray-700 leading-relaxed">
                   I am a seasoned financial professional with extensive experience in strategic planning,
                   financial analysis, and business growth optimization. With a passion for precision and
                   a deep understanding of modern financial systems, I founded CFO EDGE360 to provide
@@ -194,39 +192,37 @@ const Home = () => {
               </div>
 
               {/* Signature Line */}
-              <div className="pt-4 border-t border-gray-200">
-                <div className="space-y-1">
-                  <h4 className="text-xl font-bold text-gray-900">Md. Reazul Haque (Reaz)</h4>
-                  <p className="text-amber-600 font-medium">Founder & CEO</p>
-                  <p className="text-sm text-gray-500">Chartered Accountants, MBA in Finance, <br /> X CFO having 15+ years experience.</p>
-                </div>
+              <div className="pt-6 border-t border-gray-200">
+                <h4 className="text-2xl font-bold text-gray-900 mb-1">Md. Reazul Haque (Reaz)</h4>
+                <p className="text-amber-600 font-semibold mb-2">Founder & CEO</p>
+                <p className="text-sm text-gray-600">
+                  Chartered Accountants, MBA in Finance<br />
+                  X CFO having 15+ years experience
+                </p>
               </div>
             </div>
 
-            {/* Professional Photo */}
-            <div className="lg:order-last">
-              <div className="relative">
+            {/* Professional Photo - Takes 2 columns */}
+            <div className="lg:col-span-2">
+              <div className="relative max-w-lg mx-auto lg:max-w-none">
                 {/* Main Photo Container */}
-                <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                <div className="relative overflow-hidden rounded-2xl shadow-xl">
                   {/* Professional Photo */}
                   <img
                     src="/Reaz.webp"
                     alt="Md. Reazul Haque (Reaz) - Founder & CEO of CFO EDGE360"
-                    className="aspect-[4/5] w-full object-cover object-center"
+                    className="w-full h-auto object-cover object-center"
+                    style={{ aspectRatio: '4/5', maxHeight: '500px' }}
                   />
 
-                  {/* Overlay Elements */}
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
+                  {/* Overlay Badge */}
+                  <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-xs font-medium text-gray-700">Available for Consultation</span>
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <span className="text-xs font-semibold text-gray-800">Available for Consultation</span>
                     </div>
                   </div>
                 </div>
-
-                {/* Decorative Elements */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-amber-100 rounded-full opacity-60"></div>
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-r from-amber-50 to-orange-50 rounded-full opacity-80"></div>
               </div>
             </div>
           </div>
