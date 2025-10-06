@@ -15,7 +15,7 @@ const Services = () => {
   const services = [
     {
       id: 'strategy',
-      icon: TrendingUp,
+      icon: "/icons/analysis.png",
       title: "Financial Strategy & Forecasting",
       description: [
         "Strategic financial planning forms the backbone of successful business growth. Our comprehensive approach includes developing multi-year financial models, scenario planning, and growth roadmaps that align with your business objectives.",
@@ -25,7 +25,7 @@ const Services = () => {
     },
     {
       id: 'cashflow',
-      icon: DollarSign,
+      icon: "/icons/circular-economy.png",
       title: "Cash Flow & Working Capital Optimization",
       description: [
         "Effective cash flow management is critical for business survival and growth. We provide comprehensive liquidity management services, including cash flow forecasting, burn rate analysis, and working capital optimization strategies.",
@@ -35,7 +35,7 @@ const Services = () => {
     },
     {
       id: 'reporting',
-      icon: FileText,
+      icon: "/icons/report.png",
       title: "Investor & Board Reporting",
       description: [
         "Professional-grade financial reporting is essential for maintaining investor confidence and board oversight. We create comprehensive monthly and quarterly reports that provide clear insights into business performance and key metrics.",
@@ -45,7 +45,7 @@ const Services = () => {
     },
     {
       id: 'global',
-      icon: Globe,
+      icon: "/icons/global-connection.png",
       title: "Global Expansion & Compliance",
       description: [
         "International expansion requires expert navigation of complex regulatory environments and accounting standards. We provide guidance on US GAAP, IFRS, and local accounting requirements across multiple jurisdictions.",
@@ -55,7 +55,7 @@ const Services = () => {
     },
     {
       id: 'analytics',
-      icon: BarChart3,
+      icon: "/icons/analytics.png",
       title: "KPI Dashboard & Analytics",
       description: [
         "Real-time visibility into business performance is crucial for effective management. We design and implement comprehensive KPI dashboards that provide instant access to critical business metrics and performance indicators.",
@@ -65,7 +65,7 @@ const Services = () => {
     },
     {
       id: 'ma',
-      icon: Handshake,
+      icon: "/icons/customer-service.png",
       title: "M&A and Fundraising Support",
       description: [
         "Mergers, acquisitions, and fundraising activities require specialized financial expertise and meticulous preparation. We provide comprehensive due diligence support, including financial analysis, risk assessment, and valuation modeling.",
@@ -75,7 +75,7 @@ const Services = () => {
     },
     {
       id: 'operations',
-      icon: Settings,
+      icon: "/icons/settings.png",
       title: "Financial Operations Setup",
       description: [
         "Robust financial systems and processes are essential for scalable business growth. We help establish comprehensive accounting systems, implement automation tools, and design efficient financial processes that grow with your business.",
@@ -98,7 +98,6 @@ const Services = () => {
         <div className="mx-auto max-w-7xl">
           <div className="space-y-0">
             {services.map((service, index) => {
-              const Icon = service.icon;
               const isEven = index % 2 === 0;
               const bgColor = isEven ? 'bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900' : 'bg-white';
               
@@ -116,8 +115,12 @@ const Services = () => {
                       <div className={`space-y-6 sm:space-y-8 ${isEven ? '' : 'lg:col-start-2'}`}>
                         <div className="space-y-4">
                           <div className="flex items-center space-x-4">
-                            <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 text-white shadow-lg flex-shrink-0">
-                              <Icon className="h-7 w-7 sm:h-8 sm:w-8" />
+                            <div className="flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-white shadow-lg flex-shrink-0 p-2">
+                              <img 
+                                src={service.icon} 
+                                alt={service.title}
+                                className="h-full w-full object-contain"
+                              />
                             </div>
                             <div className="flex-1">
                               <span className={`inline-block px-3 py-1 ${isEven ? 'bg-amber-500/20 text-amber-300' : 'bg-amber-100 text-amber-800'} text-xs font-medium rounded-full mb-2`}>
@@ -163,8 +166,12 @@ const Services = () => {
                             <div className="relative">
                               {/* Large Icon */}
                               <div className="mb-6">
-                                <div className="inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 text-white shadow-lg">
-                                  <Icon className="h-10 w-10 sm:h-12 sm:w-12" />
+                                <div className="inline-flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-2xl bg-white shadow-lg p-3">
+                                  <img 
+                                    src={service.icon} 
+                                    alt={service.title}
+                                    className="h-full w-full object-contain"
+                                  />
                                 </div>
                               </div>
                               
