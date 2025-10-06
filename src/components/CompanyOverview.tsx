@@ -37,7 +37,7 @@ export interface CompanyOverviewProps {
  */
 export default function CompanyOverview({
   title = "Global Virtual CFO Excellence",
-  mainDescription = "CFO EDGE360 provides virtual and fractional CFO services to businesses across four continents, delivering strategic financial leadership that scales with your growth.",
+  mainDescription = "CFO EDGE360 provides virtual and fractional CFO services to businesses all over the world, delivering strategic financial leadership that scales with your growth.",
   secondaryDescription = "We deliver strategic forecasting, cash flow optimization, investor reporting, KPI dashboards, global compliance, and fundraising support — all at a fraction of the cost of a full-time CFO.",
   stats = [
     {
