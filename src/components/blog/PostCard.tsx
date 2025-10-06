@@ -31,71 +31,65 @@ const PostCard: React.FC<PostCardProps> = ({ post, className = '' }) => {
 
 
   return (
-    <article
-      className={`group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-gray-100 animate-fade-in ${className}`}
-    >
-      {/* Featured Image Container - Flush with top border */}
-      <div className="relative w-full h-0 pb-[56.25%] overflow-hidden rounded-t-2xl">
-        <Link
-          to={`/post/${post.slug}`}
-          className="absolute inset-0 block focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-          aria-label={`Read full post: ${post.title.rendered.replace(/<[^>]*>/g, '')}`}
-        >
-          {featuredMedia?.source_url ? (
-            <LazyImage
-              src={featuredMedia.source_url}
-              alt={featuredMedia.alt_text || post.title.rendered}
-              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
-          ) : (
-            <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-              <div className="text-slate-400">
-                <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                </svg>
-              </div>
-            </div>
-          )}
-        </Link>
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-      </div>
+    <article className={`group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 ${className}`}>
+      {/* Featured Image - Absolutely no gap */}
+      <Link
+        to={`/post/${post.slug}`}
+        className="block relative w-full h-56 overflow-hidden bg-gray-100"
+        style={{ display: 'block', lineHeight: 0 }}
+        aria-label={`Read full post: ${post.title.rendered.replace(/<[^>]*>/g, '')}`}
+      >
+        {featuredMedia?.source_url ? (
+          <img
+            src={featuredMedia.source_url}
+            alt={featuredMedia.alt_text || post.title.rendered}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            style={{ display: 'block', margin: 0, padding: 0, verticalAlign: 'top' }}
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+            <svg className="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+            </svg>
+          </div>
+        )}
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+      </Link>
 
-      {/* Content */}
-      <div className="p-6 sm:p-8">
-        {/* Meta Information - Date Only */}
-        <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
+      {/* Content Section */}
+      <div className="p-6">
+        {/* Date */}
+        <div className="flex items-center gap-2 mb-3 text-sm text-gray-500">
           <Calendar className="h-4 w-4" />
-          <time dateTime={post.date}>
-            {formatDate(post.date)}
-          </time>
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
         </div>
 
         {/* Title */}
-        <h3 className="mb-4">
+        <h3 className="mb-3">
           <Link 
             to={`/post/${post.slug}`}
-            className="text-xl sm:text-2xl font-bold font-serif text-gray-900 hover:text-amber-600 focus:text-amber-600 transition-colors duration-300 line-clamp-2 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 rounded-lg block no-underline"
+            className="text-xl font-bold text-gray-900 hover:text-amber-600 transition-colors line-clamp-2 no-underline"
             dangerouslySetInnerHTML={{ __html: post.title.rendered }}
           />
         </h3>
 
         {/* Excerpt */}
         {post.excerpt.rendered && (
-          <p className="text-gray-600 leading-relaxed mb-6 line-clamp-3">
+          <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
             {cleanExcerpt(post.excerpt.rendered)}
           </p>
         )}
 
-        {/* Read More Button */}
+        {/* Read More Link */}
         <Link
           to={`/post/${post.slug}`}
-          className="group/btn inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-gray-900 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 shadow-lg hover:shadow-xl no-underline"
+          className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold text-sm group/link no-underline"
           aria-label={`Read more about ${post.title.rendered.replace(/<[^>]*>/g, '')}`}
         >
-          <span className="text-white">Read Article</span>
-          <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300 text-white" />
+          <span>Read Article</span>
+          <ArrowRight className="h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
         </Link>
       </div>
     </article>

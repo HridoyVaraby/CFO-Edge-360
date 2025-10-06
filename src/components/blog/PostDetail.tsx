@@ -203,25 +203,33 @@ const PostDetail: React.FC<PostDetailProps> = ({
                   {relatedPosts.map((relatedPost) => {
                     const relatedMedia = relatedPost._embedded?.['wp:featuredmedia']?.[0];
                     return (
-                      <Link
+                      <article
                         key={relatedPost.id}
-                        to={`/post/${relatedPost.slug}`}
-                        className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 no-underline"
+                        className="group bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                       >
                         {relatedMedia?.source_url && (
-                          <div className="relative aspect-video overflow-hidden">
+                          <Link
+                            to={`/post/${relatedPost.slug}`}
+                            className="block relative w-full h-48 overflow-hidden bg-gray-100"
+                            style={{ display: 'block', lineHeight: 0 }}
+                          >
                             <img
                               src={relatedMedia.source_url}
                               alt={relatedMedia.alt_text || relatedPost.title.rendered}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              style={{ display: 'block', margin: 0, padding: 0, verticalAlign: 'top' }}
+                              loading="lazy"
                             />
-                          </div>
+                          </Link>
                         )}
                         <div className="p-4">
-                          <h3
-                            className="font-bold font-serif text-gray-900 group-hover:text-amber-600 transition-colors duration-200 line-clamp-2 mb-2"
-                            dangerouslySetInnerHTML={{ __html: relatedPost.title.rendered }}
-                          />
+                          <h3 className="mb-2">
+                            <Link
+                              to={`/post/${relatedPost.slug}`}
+                              className="font-bold font-serif text-gray-900 group-hover:text-amber-600 transition-colors duration-200 line-clamp-2 no-underline"
+                              dangerouslySetInnerHTML={{ __html: relatedPost.title.rendered }}
+                            />
+                          </h3>
                           <div className="flex items-center gap-2 text-xs text-gray-500">
                             <Calendar className="h-3 w-3" />
                             <time dateTime={relatedPost.date}>
@@ -233,7 +241,7 @@ const PostDetail: React.FC<PostDetailProps> = ({
                             </time>
                           </div>
                         </div>
-                      </Link>
+                      </article>
                     );
                   })}
                 </div>
