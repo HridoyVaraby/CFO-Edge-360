@@ -102,24 +102,7 @@ const PostDetailPage: React.FC = () => {
 
 
 
-  // Generate custom breadcrumbs for post detail page
-  const getBreadcrumbs = () => {
-    const breadcrumbs = [
-      { label: 'Home', href: '/' },
-      { label: 'Blog', href: '/posts' }
-    ];
-    
-    if (post) {
-      breadcrumbs.push({ 
-        label: post.title.rendered.length > 50 
-          ? `${post.title.rendered.substring(0, 50)}...` 
-          : post.title.rendered,
-        href: `/post/${slug}`
-      });
-    }
-    
-    return breadcrumbs;
-  };
+
 
   return (
     <>
@@ -141,7 +124,6 @@ const PostDetailPage: React.FC = () => {
       <BlogLayout
         title={getPostTitle()}
         description={getPostDescription()}
-        breadcrumbs={getBreadcrumbs()}
         canonical={getCanonicalUrl()}
         type="article"
         image={getPostImage()}

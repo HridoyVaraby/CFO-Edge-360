@@ -251,11 +251,11 @@ const PostListPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
 
           {/* Modern Filters Section */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 sm:p-8 mb-12">
+          <div className="bg-gray-900 rounded-2xl shadow-lg border border-gray-800 p-6 sm:p-8 mb-12">
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 lg:items-end">
               {/* Search Bar */}
               <div className="flex-1">
-                <label htmlFor="search-input" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="search-input" className="block text-sm font-semibold text-gray-300 mb-2">
                   Search Articles
                 </label>
                 <div className="relative">
@@ -269,7 +269,7 @@ const PostListPage: React.FC = () => {
                     type="text"
                     placeholder="Search articles..."
                     defaultValue={searchQuery || ''}
-                    className="w-full pl-12 pr-4 py-4 text-lg border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                    className="w-full pl-12 pr-4 py-4 text-lg border border-gray-700 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-gray-800 focus:bg-gray-700 text-white placeholder-gray-400"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         handleSearchChange(e.currentTarget.value);
@@ -282,14 +282,14 @@ const PostListPage: React.FC = () => {
 
               {/* Category Filter */}
               <div className="lg:w-64">
-                <label htmlFor="category-filter" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="category-filter" className="block text-sm font-semibold text-gray-300 mb-2">
                   Category
                 </label>
                 <select
                   id="category-filter"
                   value={currentCategory || ''}
                   onChange={(e) => handleCategoryChange(e.target.value)}
-                  className="w-full px-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white text-lg"
+                  className="w-full px-4 py-4 border border-gray-700 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-gray-800 focus:bg-gray-700 text-white text-lg"
                 >
                   <option value="">All Categories</option>
                   {categories.map((category) => (
@@ -305,7 +305,7 @@ const PostListPage: React.FC = () => {
                 <div className="lg:w-auto">
                   <button
                     onClick={clearFilters}
-                    className="w-full lg:w-auto px-6 py-4 text-sm font-semibold text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-200 transform hover:scale-105"
+                    className="w-full lg:w-auto px-6 py-4 text-sm font-semibold text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-xl transition-all duration-200 transform hover:scale-105"
                   >
                     Clear Filters
                   </button>
