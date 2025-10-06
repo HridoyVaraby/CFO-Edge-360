@@ -198,7 +198,7 @@ const Home = () => {
                 <div className="space-y-1">
                   <h4 className="text-xl font-bold text-gray-900">Md. Reazul Haque (Reaz)</h4>
                   <p className="text-amber-600 font-medium">Founder & CEO</p>
-                  <p className="text-sm text-gray-500">Certified Public Accountant (CPA)</p>
+                  <p className="text-sm text-gray-500">Chartered Accountants, MBA in Finance, <br /> X CFO having 15+ years experience.</p>
                 </div>
               </div>
             </div>
