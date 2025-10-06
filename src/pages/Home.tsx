@@ -177,8 +177,8 @@ const Home = () => {
               </div>
 
               {/* Personal Message */}
-              <div className="space-y-4">
-                <p className="text-base text-gray-700 leading-relaxed">
+              <div>
+                <p className="text-base text-gray-700 leading-relaxed mb-4">
                   I am a seasoned financial professional with extensive experience in strategic planning,
                   financial analysis, and business growth optimization. With a passion for precision and
                   a deep understanding of modern financial systems, I founded CFO EDGE360 to provide
