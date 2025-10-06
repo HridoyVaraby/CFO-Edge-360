@@ -29,22 +29,14 @@ const PostCard: React.FC<PostCardProps> = ({ post, className = '' }) => {
     return cleaned.length > 120 ? cleaned.substring(0, 120) + '...' : cleaned;
   };
 
-  // Estimate reading time
-  const estimateReadingTime = (content: string) => {
-    const wordCount = content.replace(/<[^>]*>/g, '').split(/\s+/).length;
-    const minutes = Math.ceil(wordCount / 200);
-    return minutes;
-  };
-
-  const readingTime = estimateReadingTime(post.content?.rendered || post.excerpt?.rendered || '');
 
   return (
-    <article 
+    <article
       className={`group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-gray-100 animate-fade-in ${className}`}
     >
-      {/* Featured Image with 16:9 Aspect Ratio - No top padding */}
-      <div className="relative overflow-hidden aspect-video m-0 p-0">
-        <Link 
+      {/* Featured Image Container - Flush with top border */}
+      <div className="relative w-full h-0 pb-[56.25%] overflow-hidden rounded-t-2xl">
+        <Link
           to={`/post/${post.slug}`}
           className="absolute inset-0 block focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
           aria-label={`Read full post: ${post.title.rendered.replace(/<[^>]*>/g, '')}`}
@@ -53,11 +45,11 @@ const PostCard: React.FC<PostCardProps> = ({ post, className = '' }) => {
             <LazyImage
               src={featuredMedia.source_url}
               alt={featuredMedia.alt_text || post.title.rendered}
-              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 m-0 p-0"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
-            <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center m-0 p-0">
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
               <div className="text-slate-400">
                 <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
@@ -68,11 +60,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, className = '' }) => {
         </Link>
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        
-        {/* Reading Time Badge */}
-        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-gray-700">
-          {readingTime} min read
-        </div>
       </div>
 
       {/* Content */}
