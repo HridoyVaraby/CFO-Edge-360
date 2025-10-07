@@ -94,7 +94,7 @@ const Contact = () => {
                       <h4 className="text-lg font-semibold text-gray-900 mb-1">Book a Free Consultation</h4>
                       <p className="text-sm text-gray-600 mb-3">Get personalized financial insights in a 30-minute session</p>
                       <a
-                        href="https://calendly.com/rupomreaz/"
+                        href="https://calendly.com/cfoedge360/30min"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"

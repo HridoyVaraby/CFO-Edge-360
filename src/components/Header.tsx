@@ -53,7 +53,7 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <a
-              href="https://calendly.com/rupomreaz/"
+              href="https://calendly.com/cfoedge360/30min"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-amber-500 text-white font-semibold rounded-xl hover:bg-gray-900 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
@@ -90,7 +90,7 @@ const Header = () => {
                 </Link>
               ))}
               <a
-                href="https://calendly.com/rupomreaz/"
+                href="https://calendly.com/cfoedge360/30min"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsMenuOpen(false)}
