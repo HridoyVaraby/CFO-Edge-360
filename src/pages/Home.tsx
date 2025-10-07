@@ -200,7 +200,7 @@ const Home = () => {
                 <p className="text-amber-600 font-semibold mb-2">Founder & CEO</p>
                 <p className="text-sm text-gray-600">
                   Chartered Accountants, MBA in Finance<br />
-                  X CFO having 15+ years experience
+                  X CFO with 15+ years of experience
                 </p>
               </div>
             </div>
