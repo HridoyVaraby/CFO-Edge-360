@@ -139,7 +139,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-700 mt-6 sm:mt-8 pt-4 sm:pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs sm:text-sm text-gray-500 text-center md:text-left mb-3 md:mb-0">
-            © {currentYear} CFO EDGE360. All rights reserved.
+            © {currentYear} CFO EDGE360. All rights reserved. CFO Edge360 is the sister company of <a href="https://egbookkeeping.com/" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 transition-colors duration-200">EG Bookkeeping LLC</a>.
           </p>
           <img src="/payments.webp" alt="Payment methods" className="h-auto w-auto" />
         </div>
